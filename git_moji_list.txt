@@ -1,6 +1,6 @@
 \n
 🗑️ :wastebasket:  \033[1;33m- Removal (削除)\033[0m\n
-🐛 :bug: \033[1;33m- bug fix (バク修正)\033[0m\n
+🐛 :bug: \033[1;33m- bug fix (バグ修正)\033[0m\n
 ✨ :sparkles: \033[1;33m- new feature (新機能)\033[0m\n
 🔖 :bookmark: \033[1;33m- version tag (バージョンタグ)\033[0m\n
 🎉 :tada: \033[1;33m- initial commit (はじめてのコミット)\033[0m\n
