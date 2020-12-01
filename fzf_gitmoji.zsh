@@ -12,7 +12,27 @@ function _fzf_gitstatus_widget() {
   git status
   zle reset-prompt
 }
+function _fzf_gitlog_widget() {
+  local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_moji_list.txt) | sed '/^$/d')
+  local _gitmoji_text=($(echo $_gitmoji | cut -f 3 -d ' '))
+  local _gitmoji_emoji=($(echo $_gitmoji | cut -f 2 -d ' '))
+  local _gitlog=$(git log --oneline)
+  end_length=10
+  for i in $(seq 1 $end_length); do
+    local text=${_gitmoji_text[$i]}
+    local emoji=${_gitmoji_emoji[$i]}
+    _gitlog=$(echo $_gitlog | sed -e "s/$text/$emoji/g")
+  done
+  _gitlog=$(echo $_gitlog | sed -e 's/^/\\033[1;33m/g')
+  _gitlog=$(echo $_gitlog | sed -e 's/ /\\033[0m /')
+  echo
+  echo -e $_gitlog | less
+  zle reset-prompt
+}
+
 zle     -N   _fzf_gitmoji_widget
 bindkey '\eg\ec' _fzf_gitmoji_widget
 zle     -N   _fzf_gitstatus_widget
 bindkey '\eg\es' _fzf_gitstatus_widget
+zle     -N   _fzf_gitlog_widget
+bindkey '\eg\el' _fzf_gitlog_widget
