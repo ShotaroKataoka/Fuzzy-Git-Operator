@@ -26,7 +26,11 @@ function _fzf_gitlog_widget() {
   _gitlog=$(echo $_gitlog | sed -e 's/^/\\033[1;33m/g')
   _gitlog=$(echo $_gitlog | sed -e 's/ /\\033[0m /')
   echo
-  echo -e $_gitlog | less
+  local selected_commit=$(echo -e $_gitlog | fzf +m --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
+  selected_commit=$(echo $selected_commit | cut -f 1 -d ' ')
+  local lbuf=$LBUFFER
+  local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
+  LBUFFER="$lbuf""$selected_commit""$tail"
   zle reset-prompt
 }
 
