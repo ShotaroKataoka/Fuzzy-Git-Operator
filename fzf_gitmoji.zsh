@@ -61,6 +61,22 @@ function _fzf_gitadd_widget() {
   zle reset-prompt
 }
 
+# Git commit 
+function _fzf_gitcommit_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local lbuf=$LBUFFER
+    local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
+    LBUFFER="git commit -m \"""$lbuf$tail"
+    RBUFFER=\"
+  else
+    echo "Not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
 # Git log selector
 function _fzf_gitlog_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
@@ -102,5 +118,7 @@ zle     -N   _fzf_gitstatus_widget
 bindkey '\eg\es' _fzf_gitstatus_widget
 zle     -N   _fzf_gitadd_widget
 bindkey '\eg\ea' _fzf_gitadd_widget
+zle     -N   _fzf_gitcommit_widget
+bindkey '\eg\ec' _fzf_gitcommit_widget
 zle     -N   _fzf_gitlog_widget
 bindkey '\eg\el' _fzf_gitlog_widget
