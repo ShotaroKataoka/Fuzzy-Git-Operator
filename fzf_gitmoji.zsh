@@ -119,7 +119,7 @@ function _fzf_gitbranch_widget() {
     local git_branchs=$(git branch)
     selected_branch=$(echo $git_branchs | sed -e '/\*/d' | fzf --cycle +m --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview')
     if [ -n "$selected_branch" ]; then
-      git switch $selected_branch
+      git switch "$selected_branch"
       echo 
       echo 
     fi
