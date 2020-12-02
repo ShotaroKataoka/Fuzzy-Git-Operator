@@ -70,7 +70,7 @@ function _fzf_gitcommit_widget() {
     LBUFFER="git commit -m \"""$lbuf$tail"
     RBUFFER=\"
   else
-    echo "Not a git repository."
+    echo "not a git repository."
     echo 
     echo 
   fi
@@ -112,6 +112,25 @@ function _fzf_gitlog_widget() {
   zle reset-prompt
 }
 
+# Git Branch
+function _fzf_gitbranch_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local git_branchs=$(git branch)
+    selected_branch=$(echo $git_branchs | sed -e '/\*/d' | fzf --cycle +m --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview')
+    if [ -n "$selected_branch" ]; then
+      git switch $selected_branch
+      echo 
+      echo 
+    fi
+  else
+    echo "not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
 zle     -N   _fzf_gitmoji_widget
 bindkey '\eg\ee' _fzf_gitmoji_widget
 zle     -N   _fzf_gitstatus_widget
@@ -122,3 +141,5 @@ zle     -N   _fzf_gitcommit_widget
 bindkey '\eg\ec' _fzf_gitcommit_widget
 zle     -N   _fzf_gitlog_widget
 bindkey '\eg\el' _fzf_gitlog_widget
+zle     -N   _fzf_gitbranch_widget
+bindkey '\eg\eb' _fzf_gitbranch_widget
