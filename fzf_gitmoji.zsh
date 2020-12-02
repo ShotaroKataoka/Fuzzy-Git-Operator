@@ -8,6 +8,7 @@ function _fzf_gitmoji_widget() {
   else
     local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_emoji_list.txt) | sed '/^$/d')
   fi
+  _gitmoji=$(echo $_gitmoji | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
   local selected_moji=''
   selected_moji=$(echo $_gitmoji | fzf +m --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
   selected_moji=$(echo $selected_moji | cut -f 3 -d ' ')
