@@ -112,7 +112,7 @@ function _fzf_gitlog_widget() {
   zle reset-prompt
 }
 
-# Git Branch
+# Git Branch Selector
 function _fzf_gitbranch_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
@@ -130,6 +130,7 @@ function _fzf_gitbranch_widget() {
     echo 
   fi
   zle reset-prompt
+  zle accept-line
 }
 
 zle     -N   _fzf_gitmoji_widget
