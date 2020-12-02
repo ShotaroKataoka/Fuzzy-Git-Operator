@@ -3,7 +3,7 @@ function _fzf_gitmoji_widget() {
   local lbuf=$LBUFFER
   local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
   local selected_moji=''
-  selected_moji=$(echo $(cat ~/.fzf-gitmoji-selector/git_moji_list.txt) | sed '/^$/d' | fzf +m --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
+  selected_moji=$(echo $(cat ~/.fzf-gitmoji-selector/git_emoji_list.txt) | sed '/^$/d' | fzf +m --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
   selected_moji=$(echo $selected_moji | cut -f 3 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
@@ -11,8 +11,8 @@ function _fzf_gitmoji_widget() {
 
 # Git status
 function _fzf_gitstatus_widget() {
-  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-  if [ -n "$_is_git_dir" ]; then
+  local _git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_git_dir" ]; then
     git status
     echo 
     echo 
@@ -26,9 +26,13 @@ function _fzf_gitstatus_widget() {
 
 # Git log selector
 function _fzf_gitlog_widget() {
-  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-  if [ -n "$_is_git_dir" ]; then
-    local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_moji_list.txt) | sed '/^$/d')
+  local _git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_git_dir" ]; then
+    if [ -f "$_git_dir/.git_moji_list.txt" ]; then
+      local _gitmoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
+    else
+      local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_emoji_list.txt) | sed '/^$/d')
+    fi
     local _gitmoji_text=($(echo $_gitmoji | cut -f 3 -d ' '))
     local _gitmoji_emoji=($(echo $_gitmoji | cut -f 2 -d ' '))
     local _gitlog=$(git log --oneline)
