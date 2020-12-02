@@ -1,11 +1,12 @@
 \n
-🚮 :put_litter_in_its_place: - Removal (削除)\n
 🐛 :bug: - Bug fix (バグ修正)\n
-✨ :sparkles: - New feature (新機能)\n
-🔖 :bookmark: - Version tag (バージョンタグ)\n
-🎉 :tada: - Initial commit (はじめてのコミット)\n
+👍 :+1: - Change feature (機能改善/変更)\n
+✨ :sparkles: - New feature (部分的な機能追加)\n
+🎉 :tada: - Initial commit / Great New feature (はじめてのコミット / 盛大に祝うべき大きな機能追加)\n
 ♻️ :recycle: - Refactoring  (リファクタリング)\n
+🚮 :put_litter_in_its_place: - Removal (削除)\n
 📝 :memo: - Documentation (ドキュメント)\n
 🎨 :art: - Design (デザイン)\n
-⚡ :zap: - Performance (パフォーマンス)\n
+🔖 :bookmark: - Version tag (バージョンタグ)\n
+⚡ :zap: - Performance (パフォーマンス改善)\n
 🚧 :construction: - WIP (作業中)\n
