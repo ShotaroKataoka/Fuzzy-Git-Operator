@@ -50,6 +50,7 @@ function _fzf_gitlog_widget() {
     done
     _gitlog=$(echo $_gitlog | sed -e 's/^/\\033[33m/g')
     _gitlog=$(echo $_gitlog | sed -e 's/ /\\033[0m /')
+    _gitlog=$(echo $_gitlog | sed -e 's/Merge pull request/\\033[35m\\uf126\\033[0m Merge pull request/')
     echo
     local selected_commit=$(echo -e $_gitlog | fzf +m --height=70% --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
     selected_commit=$(echo $selected_commit | cut -f 1 -d ' ')
