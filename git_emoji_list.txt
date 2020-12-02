@@ -1,11 +1,11 @@
 \n
-🚮 :put_litter_in_its_place:  \033[1;33m- Removal (削除)\033[0m\n
-🐛 :bug: \033[1;33m- Bug fix (バグ修正)\033[0m\n
-✨ :sparkles: \033[1;33m- New feature (新機能)\033[0m\n
-🔖 :bookmark: \033[1;33m- Version tag (バージョンタグ)\033[0m\n
-🎉 :tada: \033[1;33m- Initial commit (はじめてのコミット)\033[0m\n
-♻️ :recycle: \033[1;33m- Refactoring  (リファクタリング)\033[0m\n
-📝 :memo: \033[1;33m- Documentation (ドキュメント)\033[0m\n
-🎨 :art: \033[1;33m- Design (デザイン)\033[0m\n
-⚡ :zap: \033[1;33m- Performance (パフォーマンス)\033[0m\n
-🚧 :construction: \033[1;33m- WIP (作業中)\033[0m
+🚮 :put_litter_in_its_place: - Removal (削除)\n
+🐛 :bug: - Bug fix (バグ修正)\n
+✨ :sparkles: - New feature (新機能)\n
+🔖 :bookmark: - Version tag (バージョンタグ)\n
+🎉 :tada: - Initial commit (はじめてのコミット)\n
+♻️ :recycle: - Refactoring  (リファクタリング)\n
+📝 :memo: - Documentation (ドキュメント)\n
+🎨 :art: - Design (デザイン)\n
+⚡ :zap: - Performance (パフォーマンス)\n
+🚧 :construction: - WIP (作業中)\n
