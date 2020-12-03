@@ -31,6 +31,21 @@ function _fzf_gitstatus_widget() {
   zle reset-prompt
 }
 
+# Git Diff Widget
+function _fzf_gitdiff_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    git diff --cached
+    echo 
+    echo 
+  else
+    echo "Not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
 # Git Add Selector
 function _fzf_gitadd_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
@@ -172,6 +187,8 @@ function _fzf_gitpush_widget() {
 
 zle     -N   _fzf_gitmoji_widget
 bindkey '\eg\ee' _fzf_gitmoji_widget
+zle     -N   _fzf_gitdiff_widget
+bindkey '\eg\ed' _fzf_gitdiff_widget
 zle     -N   _fzf_gitstatus_widget
 bindkey '\eg\es' _fzf_gitstatus_widget
 zle     -N   _fzf_gitadd_widget
