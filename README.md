@@ -9,8 +9,11 @@ source ~/.fzf-gitmoji-selector/fzf_gitmoji.zsh
 ```
 
 ## Usage
-- `Alt-g Alt-s`: GitStatusWidget
 - `Alt-g Alt-e`: GitEmojiSelector
+- `Alt-g Alt-s`: GitStatusWidget
+- `Alt-g Alt-d`: GitDiffWidget
 - `Alt-g Alt-l`: GitLogSelector
 - `Alt-g Alt-a`: GitAddSelector
 - `Alt-g Alt-c`: GitCommitWidget
+- `Alt-g Alt-p Alt-s`: GitPushSelector
+- `Alt-g Alt-p Alt-l`: GitPullSelector
