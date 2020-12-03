@@ -13,7 +13,7 @@ function _fzf_gitmoji_widget() {
   local emoji_list=$(cat ~/.fzf-gitmoji-selector/emoji_list.txt)
   local rand=$((($RANDOM % ${#emoji_list[@]}) + 1))
   local rand_emoji=${emoji_list[$rand]}
-  selected_moji=$(echo $_gitmoji | fzf +m --ansi --cycle --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
+  selected_moji=$(echo $_gitmoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
   selected_moji=$(echo $selected_moji | cut -f 2 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
@@ -59,7 +59,7 @@ function _fzf_gitadd_widget() {
       git_status=$(echo $git_status | sed 's/^ M/\\033[31m M\\033[0m/g' | sed 's/^ D/\\033[31m D\\033[0m/g' | sed 's/^??/\\033[31m??\\033[0m/g')
       git_status=$(echo $git_status | sed 's/^M /\\033[32mM \\033[0m/g'| sed 's/^D /\\033[32mD \\033[0m/g' | sed 's/^A /\\033[32mA \\033[0m/g')
       git_status=$(echo $git_status | sed 's/^MM/\\033[32mM\\033[0m\\033[31mM\\033[0m/g')
-      local git_selected=$(echo $git_status | fzf --ansi --cycle --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-j:preview-down,ctrl-k:preview-up,ctrl-l:accept,alt-i:toggle-preview,ctrl-i:toggle-preview" --preview="echo {} | rev | cut -f 1 -d ' ' | rev | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then batcat {a} --color=always; else lsi {a}; fi'" --prompt="Add/Reset Files >> ")
+      local git_selected=$(echo $git_status | fzf --ansi --cycle --info='inline' --layout=reverse --border --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-j:preview-down,ctrl-k:preview-up,ctrl-l:accept,alt-i:toggle-preview,ctrl-i:toggle-preview" --preview="echo {} | rev | cut -f 1 -d ' ' | rev | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then batcat {a} --color=always; else lsi {a}; fi'" --prompt="Add/Reset Files >> ")
       if [ -n "$git_selected" ]; then
         if [ -n "$(echo "$git_selected" | grep -e "^ M" -e "^ D" -e "^MM" -e "^??")" ]; then
           git add $(echo "$git_selected" | rev | cut -f 1 -d ' ' | rev) >> /dev/null
@@ -117,7 +117,7 @@ function _fzf_gitlog_widget() {
     _gitlog=$(echo $_gitlog | sed -e 's/ /\\033[0m /')
     _gitlog=$(echo $_gitlog | sed -e 's/Merge pull request/\\033[35m\\uf126\\033[0m Merge pull request/')
     echo
-    local selected_commit=$(echo -e $_gitlog | fzf +m --prompt='Git Log >> ' --height=70% --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview="echo {} | cut -f 1 -d ' ' | xargs -rI{a} sh -c 'git diff {a}^..{a} --color=always'")
+    local selected_commit=$(echo -e $_gitlog | fzf +m --info='inline' --layout=reverse --border --prompt='Git Log >> ' --height=70% --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview="echo {} | cut -f 1 -d ' ' | xargs -rI{a} sh -c 'git diff {a}^..{a} --color=always'")
     selected_commit=$(echo $selected_commit | cut -f 1 -d ' ')
     local lbuf=$LBUFFER
     local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
@@ -135,7 +135,7 @@ function _fzf_gitbranch_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
-    selected_branch=$(echo $git_branchs | sed -e '/\*/d' | cut -d " " -f 3 | fzf --cycle +m --prompt='Git Switch >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    selected_branch=$(echo $git_branchs | sed -e '/\*/d' | cut -d " " -f 3 | fzf --cycle +m --info='inline' --layout=reverse --border --prompt='Git Switch >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
     if [ -n "$selected_branch" ]; then
       git switch "$selected_branch"
       echo 
@@ -155,7 +155,7 @@ function _fzf_gitpull_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
-    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --prompt='Git Pull >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --info='inline' --layout=reverse --border --prompt='Git Pull >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
     if [ -n "$selected_branch" ]; then
       git pull origin "$selected_branch"
       echo 
@@ -174,7 +174,7 @@ function _fzf_gitpush_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
-    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --prompt='Git Push >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --info='inline' --layout=reverse --border --prompt='Git Push >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
     if [ -n "$selected_branch" ]; then
       git push origin "$selected_branch"
       echo 
