@@ -31,13 +31,13 @@ function _fzf_gitstatus_widget() {
   zle reset-prompt
 }
 
-# Git add
+# Git Add Selector
 function _fzf_gitadd_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     while :
     do
-      local git_status=$(git status --short)
+      local git_status=$(git status --short | tac)
       git_status=$(echo $git_status | sed 's/^ M/\\033[31m M\\033[0m/g' | sed 's/^ D/\\033[31m D\\033[0m/g' | sed 's/^??/\\033[31m??\\033[0m/g')
       git_status=$(echo $git_status | sed 's/^M /\\033[32mM \\033[0m/g'| sed 's/^D /\\033[32mD \\033[0m/g' | sed 's/^A /\\033[32mA \\033[0m/g')
       git_status=$(echo $git_status | sed 's/^MM/\\033[32mM\\033[0m\\033[31mM\\033[0m/g')
