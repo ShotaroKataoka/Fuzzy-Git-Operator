@@ -11,7 +11,7 @@ function _fzf_gitmoji_widget() {
   _gitmoji=$(echo $_gitmoji | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
   local selected_moji=''
   selected_moji=$(echo $_gitmoji | fzf +m --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
-  selected_moji=$(echo $selected_moji | cut -f 3 -d ' ')
+  selected_moji=$(echo $selected_moji | cut -f 2 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
 }
@@ -31,13 +31,28 @@ function _fzf_gitstatus_widget() {
   zle reset-prompt
 }
 
-# Git add
+# Git Diff Widget
+function _fzf_gitdiff_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    git diff --cached
+    echo 
+    echo 
+  else
+    echo "Not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
+# Git Add Selector
 function _fzf_gitadd_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     while :
     do
-      local git_status=$(git status --short)
+      local git_status=$(git status --short | tac)
       git_status=$(echo $git_status | sed 's/^ M/\\033[31m M\\033[0m/g' | sed 's/^ D/\\033[31m D\\033[0m/g' | sed 's/^??/\\033[31m??\\033[0m/g')
       git_status=$(echo $git_status | sed 's/^M /\\033[32mM \\033[0m/g'| sed 's/^D /\\033[32mD \\033[0m/g' | sed 's/^A /\\033[32mA \\033[0m/g')
       git_status=$(echo $git_status | sed 's/^MM/\\033[32mM\\033[0m\\033[31mM\\033[0m/g')
@@ -70,7 +85,7 @@ function _fzf_gitcommit_widget() {
     LBUFFER="git commit -m \"""$lbuf$tail"
     RBUFFER=\"
   else
-    echo "Not a git repository."
+    echo "not a git repository."
     echo 
     echo 
   fi
@@ -112,8 +127,68 @@ function _fzf_gitlog_widget() {
   zle reset-prompt
 }
 
+# Git Branch Selector
+function _fzf_gitbranch_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local git_branchs=$(git branch)
+    selected_branch=$(echo $git_branchs | sed -e '/\*/d' | cut -d " " -f 3 | fzf --cycle +m --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    if [ -n "$selected_branch" ]; then
+      git switch "$selected_branch"
+      echo 
+      echo 
+    fi
+  else
+    echo "not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+  zle accept-line
+}
+
+# Git Pull Selector
+function _fzf_gitpull_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local git_branchs=$(git branch)
+    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    if [ -n "$selected_branch" ]; then
+      git pull origin "$selected_branch"
+      echo 
+      echo 
+    fi
+  else
+    echo "not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
+# Git Push Selector
+function _fzf_gitpush_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local git_branchs=$(git branch)
+    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}")
+    if [ -n "$selected_branch" ]; then
+      git push origin "$selected_branch"
+      echo 
+      echo 
+    fi
+  else
+    echo "not a git repository."
+    echo 
+    echo 
+  fi
+  zle reset-prompt
+}
+
 zle     -N   _fzf_gitmoji_widget
 bindkey '\eg\ee' _fzf_gitmoji_widget
+zle     -N   _fzf_gitdiff_widget
+bindkey '\eg\ed' _fzf_gitdiff_widget
 zle     -N   _fzf_gitstatus_widget
 bindkey '\eg\es' _fzf_gitstatus_widget
 zle     -N   _fzf_gitadd_widget
@@ -122,3 +197,9 @@ zle     -N   _fzf_gitcommit_widget
 bindkey '\eg\ec' _fzf_gitcommit_widget
 zle     -N   _fzf_gitlog_widget
 bindkey '\eg\el' _fzf_gitlog_widget
+zle     -N   _fzf_gitbranch_widget
+bindkey '\eg\eb' _fzf_gitbranch_widget
+zle     -N   _fzf_gitpull_widget
+bindkey '\eg\ep\el' _fzf_gitpull_widget
+zle     -N   _fzf_gitpush_widget
+bindkey '\eg\ep\es' _fzf_gitpush_widget
