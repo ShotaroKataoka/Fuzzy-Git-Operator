@@ -9,6 +9,8 @@ source ~/.fzf-gitmoji-selector/fzf_gitmoji.zsh
 ```
 
 ## Usage
-- `Alt-g Alt-s`: Show `git status`
-- `Alt-g Alt-c`: Start gitmoji Selector
-- `Alt-g Alt-l : Show `git log --oneline`
+- `Alt-g Alt-s`: GitStatusWidget
+- `Alt-g Alt-e`: GitEmojiSelector
+- `Alt-g Alt-l`: GitLogSelector
+- `Alt-g Alt-a`: GitAddSelector
+- `Alt-g Alt-c`: GitCommitWidget
