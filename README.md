@@ -45,13 +45,13 @@ source ~/.zshrc
 
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
-You can select emoji for your joyful commit message!  
+You can select emoji for your joyful commit messages!  
 
 ![image](https://user-images.githubusercontent.com/42331656/101112422-96b17e00-3620-11eb-9ceb-1168356f63b2.png)
 
 Customize:  
-⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
-⚙️ customize local emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
+⚙️ Global emoji: Edit `~/.fgo/user/git_emoji_list.txt`  
+⚙️ Local emoji (Each Git-Repository): Create `.fgo_emoji_list.txt` to the top dir of each Git-Repository.  
 
 ### ✨Git Status Widget✨
 ⌨ Key map: `Alt-g Alt-s`  
