@@ -14,7 +14,7 @@ function _fgo_gitemoji_widget() {
   local rand=$((($RANDOM % ${#emoji_list[@]}) + 1))
   local rand_emoji=${emoji_list[$rand]}
   selected_moji=$(echo $_gitemoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=35% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
-  selected_moji=$(echo $selected_moji | cut -f 2 -d ' ')
+  selected_moji=$(echo $selected_moji | cut -f 1 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
 }
@@ -108,12 +108,12 @@ function _fgo_gitlog_widget() {
   if [ -n "$_is_git_dir" ]; then
     local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
     if [ -f "$_git_dir/.git_emoji_list.txt" ]; then
-      local _gitemoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
+      local _gitemoji=$(cat $_git_dir/.git_emoji_list.txt)
     else
-      local _gitemoji=$(echo $(cat ~/.fgo/user/git_emoji_list.txt) | sed '/^$/d')
+      local _gitemoji=$(cat ~/.fgo/user/git_emoji_list.txt)
     fi
-    local _gitemoji_emoji=($(echo $_gitemoji | cut -f 2 -d ' '))
-    local _gitemoji_text=($(echo $_gitemoji | cut -f 3 -d ' '))
+    local _gitemoji_emoji=($(echo $_gitemoji | sed '/^$/d' | cut -f 1 -d ' '))
+    local _gitemoji_text=($(echo $_gitemoji | sed '/^$/d' | cut -f 2 -d ' '))
     local _gitlog=$(git log --oneline)
     for i in $(seq 1 ${#_gitemoji_text[@]}); do
       local text=${_gitemoji_text[$i]}
