@@ -10,8 +10,8 @@ source ~/.fgo/install.zsh
 ```
 
 ## 🚮Uninstall
-1. Delete `~/.fgo`.
-1. Remove `source ~/.fgo/fuzzy_git_operator.zsh` from `~/.zshrc`.
+1. Delete `~/.fgo`
+1. Remove `source ~/.fgo/fuzzy_git_operator.zsh` from `~/.zshrc`
 
 ## 🔰Usage
 ### Widget list
