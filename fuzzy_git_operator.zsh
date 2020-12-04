@@ -4,11 +4,11 @@ function _fgo_gitemoji_widget() {
   local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
   local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
   if [ -f "$_git_dir/.fgo_emoji_list.txt" ]; then
-    local _gitemoji=$(echo $(cat $_git_dir/.fgo_emoji_list.txt) | sed '/^$/d')
+    local _gitemoji=$(cat $_git_dir/.fgo_emoji_list.txt)
   else
-    local _gitemoji=$(echo $(cat ~/.fgo/user/git_emoji_list.txt) | sed '/^$/d')
+    local _gitemoji=$(cat ~/.fgo/user/git_emoji_list.txt)
   fi
-  _gitemoji=$(echo $_gitemoji | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
+  _gitemoji=$(echo $_gitemoji | sed '/^$/d' | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
   local selected_moji=''
   local emoji_list=$(cat ~/.fgo/data/decorations.txt)
   local rand=$((($RANDOM % ${#emoji_list[@]}) + 1))
