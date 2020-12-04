@@ -23,6 +23,8 @@ function _fgo_gitemoji_widget() {
 function _fgo_gitstatus_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
+    echo 
+    echo === Git Status ===
     git status
     echo 
     echo 
@@ -38,8 +40,10 @@ function _fgo_gitstatus_widget() {
 function _fgo_gitdiff_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
-    git diff --cached
-    echo 
+    local git_diff_staged=$(git diff --cached --color=always)
+    local git_diff_unstaged=$(git diff --color=always)
+    echo "\\033[33m=== Git Diff Staged ===\\033[0m \\n$git_diff_staged\\n\\n\\033[33m=== Git Diff Unstaged ===\\033[0m \\n$git_diff_unstaged" | less
+    echo
     echo 
   else
     echo "Not a git repository."
