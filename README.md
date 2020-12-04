@@ -22,9 +22,9 @@ source ~/.fgo/install.zsh
 Key map: `Alt-g Alt-e`  
 🎉You can select emoji for your joyful commit message!  
 
-Customize:
-- customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`
-- customize emoji list each git-repository: create `.fgo_emoji_list.txt` for the top dir of the git-repository.
+Customize:  
+⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
+⚙️ customize emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
 
 ### Git Status Widget
 ### Git Diff Widget
