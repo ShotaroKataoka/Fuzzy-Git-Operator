@@ -7,7 +7,7 @@ git clone git@github.com:ShotaroKataoka/fzf-gitmoji-selector.git ~/.fgo
 source ~/.fgo/install.zsh
 ```
 
-### Uninstall🚮
+## 🚮Uninstall
 1. Delete `~/.fgo`.
 1. Remove `source ~/.fgo/install.zsh` from `~/.zshrc`.
 
