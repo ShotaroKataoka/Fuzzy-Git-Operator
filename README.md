@@ -1,13 +1,17 @@
-# Fuzzy Git Operator
-🎉🎉An interactive Git Operator on Terminal🎉🎉
+# 🎉🎉Fuzzy Git Operator🎉🎉
+An interactive Git Operator on Terminal🚀
 
-## Install
+## 🥰Install🥰
 ```
 git clone git@github.com:ShotaroKataoka/fzf-gitmoji-selector.git ~/.fgo
 source ~/.fgo/install.zsh
 ```
 
-## Usage
+### 🚮Uninstall🚮
+1. Delete `~/.fgo`.
+1. Remove `source ~/.fgo/install.zsh` from `~/.zshrc`.
+
+## 🔰Usage🔰
 ### Widget list
 - `Alt-g Alt-e`: [Git Emoji Selector](#git-emoji-selector)
 - `Alt-g Alt-s`: [Git Status Widget](#git-status-widget)
