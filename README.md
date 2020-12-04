@@ -9,14 +9,14 @@ source ~/.fgo/install.zsh
 
 ## Usage
 ### Widget list
-- `Alt-g Alt-e`: Git Emoji Selector
-- `Alt-g Alt-s`: Git Status Widget
-- `Alt-g Alt-d`: Git Diff Widget
-- `Alt-g Alt-l`: Git Log Selector
-- `Alt-g Alt-a`: Git Add Selector
-- `Alt-g Alt-c`: Git Commit Widget
-- `Alt-g Alt-p Alt-s`: Git Push Selector
-- `Alt-g Alt-p Alt-l`: Git Pull Selector
+- `Alt-g Alt-e`: [Git Emoji Selector](#git-emoji-selector)
+- `Alt-g Alt-s`: [Git Status Widget](#git-status-widget)
+- `Alt-g Alt-d`: [Git Diff Widget](#git-diff_widget)
+- `Alt-g Alt-l`: [Git Log Selector](#git-log-selector)
+- `Alt-g Alt-a`: [Git Add Selector](#git-add-selector)
+- `Alt-g Alt-c`: [Git Commit Widget](#git-commit-widget)
+- `Alt-g Alt-p Alt-s`: [Git Push Selector](#git-push-selector)
+- `Alt-g Alt-p Alt-l`: [Git Pull Selector](#git-pull-selector)
 
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
