@@ -1,5 +1,7 @@
 # 🎉🎉Fuzzy Git Operator🎉🎉
 An interactive Git Operator on Terminal🚀
+- Easy Git Operation
+- Enjoy colorful develop with [emoji-prefix](https://goodpatch.com/blog/beautiful-commits-with-emojis/) commit messages!
 
 ## 🥰Install
 ```
