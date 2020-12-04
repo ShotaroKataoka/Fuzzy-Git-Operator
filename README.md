@@ -4,7 +4,7 @@ An interactive Git Operator on Terminal🚀
 - Enjoy colorful developing with [emoji-prefix](https://goodpatch.com/blog/beautiful-commits-with-emojis/) commit messages!
 
 ## 🥰Install
-```
+```bash
 git clone git@github.com:ShotaroKataoka/fzf-gitmoji-selector.git ~/.fgo
 source ~/.fgo/install.zsh
 ```
