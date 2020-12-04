@@ -123,6 +123,7 @@ function _fgo_gitlog_widget() {
     _gitlog=$(echo $_gitlog | sed -e 's/^/\\033[33m/g')
     _gitlog=$(echo $_gitlog | sed -e 's/ /\\033[0m /')
     _gitlog=$(echo $_gitlog | sed -e 's/Merge pull request/\\033[35m\\uf126\\033[0m Merge pull request/')
+    _gitlog=$(echo $_gitlog | sed -e 's/Merge branch/\\033[35m\\uf126\\033[0m Merge branch/')
     echo
     local selected_commit=$(echo -e $_gitlog | fzf +m --info='inline' --layout=reverse --border --prompt='Git Log >> ' --height=70% --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview="echo {} | cut -f 1 -d ' ' | xargs -rI{a} sh -c 'git diff {a}^..{a} --color=always'")
     selected_commit=$(echo $selected_commit | cut -f 1 -d ' ')
