@@ -60,7 +60,7 @@ function _fgo_gitadd_widget() {
     while :
     do
       local git_status=$(git status --short | tac)
-      git_status=$(echo $git_status | sed 's/^ M/\\033[31m M\\033[0m/g' | sed 's/^ D/\\033[31m D\\033[0m/g' | sed 's/^??/\\033[31m??\\033[0m/g')
+      git_status=$(echo $git_status | sed 's/^ M/\\033[31m M\\033[0m/g' | sed 's/^ D/\\033[31m D\\033[0m/g' | sed 's/^??/\\033[31m??\\033[0m/g' | sed 's/^AM/\\033[31mAM\\033[0m/g')
       git_status=$(echo $git_status | sed 's/^M /\\033[32mM \\033[0m/g'| sed 's/^D /\\033[32mD \\033[0m/g' | sed 's/^A /\\033[32mA \\033[0m/g')
       git_status=$(echo $git_status | sed 's/^MM/\\033[32mM\\033[0m\\033[31mM\\033[0m/g')
       local git_selected_list=($(echo $git_status | fzf --ansi --cycle --info='inline' -m --layout=reverse --border --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-j:preview-down,ctrl-k:preview-up,ctrl-l:accept,alt-i:toggle-preview" --preview="echo {} | rev | cut -f 1 -d ' ' | rev | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then batcat {a} --color=always; else lsi {a}; fi'" --prompt="Add/Reset Files >> "))
@@ -68,7 +68,7 @@ function _fgo_gitadd_widget() {
         for i in `seq 1 ${#git_selected_list[@]}`
         do
           git_selected=${git_selected_list[$i]}
-          if [ -n "$(echo "$git_selected" | grep -e "^ M" -e "^ D" -e "^MM" -e "^??")" ]; then
+          if [ -n "$(echo "$git_selected" | grep -e "^ M" -e "^ D" -e "^MM" -e "^??" -e "^AM")" ]; then
             git add $(echo "$git_selected" | rev | cut -f 1 -d ' ' | rev) >> /dev/null
           fi
           if [ -n "$(echo "$git_selected" | grep -e "^M " -e "^D " -e "^A ")" ]; then
