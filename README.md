@@ -19,8 +19,8 @@ source ~/.fgo/install.zsh
 - `Alt-g Alt-p Alt-l`: Git Pull Selector
 
 ### Git Emoji Selector
-Key map: `Alt-g Alt-e`  
-🎉You can select emoji for your joyful commit message!  
+🎉 You can select emoji for your joyful commit message!  
+⌨ Key map: `Alt-g Alt-e`  
 
 Customize:  
 ⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
