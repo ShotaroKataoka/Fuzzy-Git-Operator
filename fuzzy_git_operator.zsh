@@ -23,9 +23,8 @@ function _fgo_gitemoji_widget() {
 function _fgo_gitstatus_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
-    echo 
-    echo === Git Status ===
-    git status
+    local git_status=$(git -c color.status=always status)
+    echo "\\033[33m=== Git Status ===\\033[0m\\n$git_status" | less
     echo 
     echo 
   else
