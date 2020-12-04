@@ -24,7 +24,7 @@ You can select emoji for your joyful commit message!
 
 Customize:  
 ⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
-⚙️ customize emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
+⚙️ customize local emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
 
 ### Git Status Widget
 ### Git Diff Widget
