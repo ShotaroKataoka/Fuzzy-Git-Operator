@@ -1,26 +1,26 @@
 # Git emoji selector
-function _fzf_gitmoji_widget() {
+function _fgo_gitemoji_widget() {
   local lbuf=$LBUFFER
   local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
   local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
   if [ -f "$_git_dir/.git_emoji_list.txt" ]; then
-    local _gitmoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
+    local _gitemoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
   else
-    local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_emoji_list.txt) | sed '/^$/d')
+    local _gitemoji=$(echo $(cat ~/.fgo/user/git_emoji_list.txt) | sed '/^$/d')
   fi
-  _gitmoji=$(echo $_gitmoji | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
+  _gitemoji=$(echo $_gitemoji | sed 's/ - / \\033[33m- /' | sed -e 's/$/\\033[0m/')
   local selected_moji=''
-  local emoji_list=$(cat ~/.fzf-gitmoji-selector/emoji_list.txt)
+  local emoji_list=$(cat ~/.fgo/data/decorations.txt)
   local rand=$((($RANDOM % ${#emoji_list[@]}) + 1))
   local rand_emoji=${emoji_list[$rand]}
-  selected_moji=$(echo $_gitmoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
+  selected_moji=$(echo $_gitemoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
   selected_moji=$(echo $selected_moji | cut -f 2 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
 }
 
 # Git status
-function _fzf_gitstatus_widget() {
+function _fgo_gitstatus_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     git status
@@ -35,7 +35,7 @@ function _fzf_gitstatus_widget() {
 }
 
 # Git Diff Widget
-function _fzf_gitdiff_widget() {
+function _fgo_gitdiff_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     git diff --cached
@@ -50,7 +50,7 @@ function _fzf_gitdiff_widget() {
 }
 
 # Git Add Selector
-function _fzf_gitadd_widget() {
+function _fgo_gitadd_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     while :
@@ -84,7 +84,7 @@ function _fzf_gitadd_widget() {
 }
 
 # Git commit 
-function _fzf_gitcommit_widget() {
+function _fgo_gitcommit_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local lbuf=$LBUFFER
@@ -100,21 +100,21 @@ function _fzf_gitcommit_widget() {
 }
 
 # Git log selector
-function _fzf_gitlog_widget() {
+function _fgo_gitlog_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
     if [ -f "$_git_dir/.git_emoji_list.txt" ]; then
-      local _gitmoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
+      local _gitemoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
     else
-      local _gitmoji=$(echo $(cat ~/.fzf-gitmoji-selector/git_emoji_list.txt) | sed '/^$/d')
+      local _gitemoji=$(echo $(cat ~/.fgo/user/git_emoji_list.txt) | sed '/^$/d')
     fi
-    local _gitmoji_emoji=($(echo $_gitmoji | cut -f 2 -d ' '))
-    local _gitmoji_text=($(echo $_gitmoji | cut -f 3 -d ' '))
+    local _gitemoji_emoji=($(echo $_gitemoji | cut -f 2 -d ' '))
+    local _gitemoji_text=($(echo $_gitemoji | cut -f 3 -d ' '))
     local _gitlog=$(git log --oneline)
-    for i in $(seq 1 ${#_gitmoji_text[@]}); do
-      local text=${_gitmoji_text[$i]}
-      local emoji=${_gitmoji_emoji[$i]}
+    for i in $(seq 1 ${#_gitemoji_text[@]}); do
+      local text=${_gitemoji_text[$i]}
+      local emoji=${_gitemoji_emoji[$i]}
       _gitlog=$(echo $_gitlog | sed -e "s/$text/$emoji/g")
     done
     _gitlog=$(echo $_gitlog | sed -e 's/^/\\033[33m/g')
@@ -135,7 +135,7 @@ function _fzf_gitlog_widget() {
 }
 
 # Git Branch Selector
-function _fzf_gitbranch_widget() {
+function _fgo_gitbranch_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
@@ -155,7 +155,7 @@ function _fzf_gitbranch_widget() {
 }
 
 # Git Pull Selector
-function _fzf_gitpull_widget() {
+function _fgo_gitpull_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
@@ -174,7 +174,7 @@ function _fzf_gitpull_widget() {
 }
 
 # Git Push Selector
-function _fzf_gitpush_widget() {
+function _fgo_gitpush_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
@@ -192,21 +192,21 @@ function _fzf_gitpush_widget() {
   zle reset-prompt
 }
 
-zle     -N   _fzf_gitmoji_widget
-bindkey '\eg\ee' _fzf_gitmoji_widget
-zle     -N   _fzf_gitdiff_widget
-bindkey '\eg\ed' _fzf_gitdiff_widget
-zle     -N   _fzf_gitstatus_widget
-bindkey '\eg\es' _fzf_gitstatus_widget
-zle     -N   _fzf_gitadd_widget
-bindkey '\eg\ea' _fzf_gitadd_widget
-zle     -N   _fzf_gitcommit_widget
-bindkey '\eg\ec' _fzf_gitcommit_widget
-zle     -N   _fzf_gitlog_widget
-bindkey '\eg\el' _fzf_gitlog_widget
-zle     -N   _fzf_gitbranch_widget
-bindkey '\eg\eb' _fzf_gitbranch_widget
-zle     -N   _fzf_gitpull_widget
-bindkey '\eg\ep\el' _fzf_gitpull_widget
-zle     -N   _fzf_gitpush_widget
-bindkey '\eg\ep\es' _fzf_gitpush_widget
+zle     -N   _fgo_gitemoji_widget
+bindkey '\eg\ee' _fgo_gitemoji_widget
+zle     -N   _fgo_gitdiff_widget
+bindkey '\eg\ed' _fgo_gitdiff_widget
+zle     -N   _fgo_gitstatus_widget
+bindkey '\eg\es' _fgo_gitstatus_widget
+zle     -N   _fgo_gitadd_widget
+bindkey '\eg\ea' _fgo_gitadd_widget
+zle     -N   _fgo_gitcommit_widget
+bindkey '\eg\ec' _fgo_gitcommit_widget
+zle     -N   _fgo_gitlog_widget
+bindkey '\eg\el' _fgo_gitlog_widget
+zle     -N   _fgo_gitbranch_widget
+bindkey '\eg\eb' _fgo_gitbranch_widget
+zle     -N   _fgo_gitpull_widget
+bindkey '\eg\ep\el' _fgo_gitpull_widget
+zle     -N   _fgo_gitpush_widget
+bindkey '\eg\ep\es' _fgo_gitpush_widget
