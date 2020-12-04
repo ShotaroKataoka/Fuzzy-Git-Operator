@@ -9,6 +9,13 @@ git clone git@github.com:ShotaroKataoka/fzf-gitmoji-selector.git ~/.fgo
 source ~/.fgo/install.zsh
 ```
 
+## 🚀Update
+```bash
+cd ~/.fgo
+git pull origin main
+source ~/.zshrc
+```
+
 ## 🚮Uninstall
 1. Delete `~/.fgo`
 1. Remove `source ~/.fgo/fuzzy_git_operator.zsh` from `~/.zshrc`
