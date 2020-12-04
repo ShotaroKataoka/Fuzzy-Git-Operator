@@ -13,7 +13,7 @@ function _fgo_gitemoji_widget() {
   local emoji_list=$(cat ~/.fgo/data/decorations.txt)
   local rand=$((($RANDOM % ${#emoji_list[@]}) + 1))
   local rand_emoji=${emoji_list[$rand]}
-  selected_moji=$(echo $_gitemoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
+  selected_moji=$(echo $_gitemoji | fzf +m --ansi --cycle --info='inline' --layout=reverse --border --prompt="$rand_emoji Git Emoji $rand_emoji >> " --height=35% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept')
   selected_moji=$(echo $selected_moji | cut -f 2 -d ' ')
   LBUFFER="$lbuf""$selected_moji""$tail"
   zle reset-prompt
