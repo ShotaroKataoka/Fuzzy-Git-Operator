@@ -3,8 +3,8 @@ function _fgo_gitemoji_widget() {
   local lbuf=$LBUFFER
   local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
   local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
-  if [ -f "$_git_dir/.git_emoji_list.txt" ]; then
-    local _gitemoji=$(echo $(cat $_git_dir/.git_emoji_list.txt) | sed '/^$/d')
+  if [ -f "$_git_dir/.fgo_emoji_list.txt" ]; then
+    local _gitemoji=$(echo $(cat $_git_dir/.fgo_emoji_list.txt) | sed '/^$/d')
   else
     local _gitemoji=$(echo $(cat ~/.fgo/user/git_emoji_list.txt) | sed '/^$/d')
   fi
