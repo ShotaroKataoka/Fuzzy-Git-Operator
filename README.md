@@ -31,6 +31,18 @@ source ~/.zshrc
 - `Alt-g Alt-p Alt-s`: [Git Push Selector](#git-push-selector)
 - `Alt-g Alt-p Alt-l`: [Git Pull Selector](#git-pull-selector)
 
+### ⌨General Keybindings
+| Action                        | Key                            |
+| ----------------------------- | ------------------------------ |
+| Cursor Up                     | Alt-k or Up                    |
+| Cursor Down                   | Alt-j or Down                  |
+| Select                        | Alt-l or Right or Enter        |
+| Abort                         | Alt-h or Left or Ctrl-c or ESC |
+| Multi-Select (GitAddSelector) | Tab or Shift-Tab               |
+| Preview-Up                    | Ctrl-k                         |
+| Preview-Down                  | Ctrl-j                         |
+| Toggle-Preview                | Alt-i                          |
+
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
 You can select emoji for your joyful commit message!  
