@@ -48,7 +48,7 @@ You can select and input commit id using GitLogSelector.
 ![image](https://user-images.githubusercontent.com/42331656/101116807-2824ee00-3629-11eb-9276-b1ffd695a268.png)
 
 ### ✨Git Add Selector✨
-⌨ Key map: `Alt-g Alt-l`  
+⌨ Key map: `Alt-g Alt-`  
 You can select adding or resetting your changes using GItAddSelector.  
 
 ![image](https://user-images.githubusercontent.com/42331656/101117127-b4371580-3629-11eb-96fe-cff6ef57c2af.png)
