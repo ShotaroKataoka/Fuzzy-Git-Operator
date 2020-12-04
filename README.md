@@ -28,10 +28,10 @@ Customize:
 ⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
 ⚙️ customize local emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
 
-### Git Status Widget
-### Git Diff Widget
-### Git Log Selector
-### Git Add Selector
-### Git Commit Widget
-### Git Push Selector
-### Git Pull Selector
+### ✨Git Status Widget✨
+### ✨Git Diff Widget✨
+### ✨Git Log Selector✨
+### ✨Git Add Selector✨
+### ✨Git Commit Widget✨
+### ✨Git Push Selector✨
+### ✨Git Pull Selector✨
