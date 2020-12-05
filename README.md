@@ -5,7 +5,7 @@ An interactive Git Operator on Terminal🚀
 
 ## 🥰Install
 ```bash
-git clone git@github.com:ShotaroKataoka/fzf-gitmoji-selector.git ~/.fgo
+git clone git@github.com:ShotaroKataoka/Fuzzy-Git-Operator.git ~/.fgo
 source ~/.fgo/install.zsh
 ```
 
