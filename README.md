@@ -31,15 +31,27 @@ source ~/.zshrc
 - `Alt-g Alt-p Alt-s`: [Git Push Selector](#git-push-selector)
 - `Alt-g Alt-p Alt-l`: [Git Pull Selector](#git-pull-selector)
 
+### ⌨General Keybindings
+| Action                        | Key                            |
+| ----------------------------- | ------------------------------ |
+| Cursor Up                     | Alt-k or Up                    |
+| Cursor Down                   | Alt-j or Down                  |
+| Select                        | Alt-l or Right or Enter        |
+| Abort                         | Alt-h or Left or Ctrl-c or ESC |
+| Multi-Select (GitAddSelector) | Tab or Shift-Tab               |
+| Preview-Up                    | Ctrl-k                         |
+| Preview-Down                  | Ctrl-j                         |
+| Toggle-Preview                | Alt-i                          |
+
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
-You can select emoji for your joyful commit message!  
+You can select emoji for your joyful commit messages!  
 
 ![image](https://user-images.githubusercontent.com/42331656/101112422-96b17e00-3620-11eb-9ceb-1168356f63b2.png)
 
 Customize:  
-⚙️ customize global emoji list: edit `~/.fgo/user/git_emoji_list.txt`  
-⚙️ customize local emoji list each git-repository: create `.fgo_emoji_list.txt` to the top dir of the git-repository.  
+⚙️ Global emoji: Edit `~/.fgo/user/git_emoji_list.txt`  
+⚙️ Local emoji (Each Git-Repository): Create `.fgo_emoji_list.txt` to the top dir of each Git-Repository.  
 
 ### ✨Git Status Widget✨
 ⌨ Key map: `Alt-g Alt-s`  
