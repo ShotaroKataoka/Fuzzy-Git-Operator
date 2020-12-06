@@ -26,6 +26,7 @@ source ~/.zshrc
 - `Alt-g Alt-s`: [Git Status Widget](#git-status-widget)
 - `Alt-g Alt-d`: [Git Diff Widget](#git-diff-widget)
 - `Alt-g Alt-l`: [Git Log Selector](#git-log-selector)
+- `Alt-g Alt-b`: [Git Branch Selector](#git-branch-selector)
 - `Alt-g Alt-a`: [Git Add Selector](#git-add-selector)
 - `Alt-g Alt-c`: [Git Commit Widget](#git-commit-widget)
 - `Alt-g Alt-p Alt-s`: [Git Push Selector](#git-push-selector)
@@ -71,6 +72,12 @@ You can check `git log --oneline` with emoji while input the command line.
 You can select and input commit id using GitLogSelector.
 
 ![image](https://user-images.githubusercontent.com/42331656/101116807-2824ee00-3629-11eb-9276-b1ffd695a268.png)
+
+### ✨Git Branch Selector✨
+⌨ Key map: `Alt-g Alt-b`  
+You can select and switch branch.
+
+![image](https://user-images.githubusercontent.com/42331656/101275505-88fb2480-37e9-11eb-95c4-6d26ad3a9ab2.png)
 
 ### ✨Git Add Selector✨
 ⌨ Key map: `Alt-g Alt-a`  
