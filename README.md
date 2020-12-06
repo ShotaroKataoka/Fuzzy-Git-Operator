@@ -22,6 +22,7 @@ source ~/.zshrc
 
 ## 🔰Usage
 ### Widget list
+- `Alt-g Alt-h`: [Git Help Widget](#git-help-widget)
 - `Alt-g Alt-e`: [Git Emoji Selector](#git-emoji-selector)
 - `Alt-g Alt-s`: [Git Status Widget](#git-status-widget)
 - `Alt-g Alt-d`: [Git Diff Widget](#git-diff-widget)
@@ -43,6 +44,10 @@ source ~/.zshrc
 | Preview-Up                    | Ctrl-k                         |
 | Preview-Down                  | Ctrl-j                         |
 | Toggle-Preview                | Alt-i                          |
+
+### ✨Git Help Widget✨
+⌨ Key map: `Alt-g Alt-h`  
+Show help.
 
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
