@@ -22,7 +22,6 @@ source ~/.zshrc
 
 ## 🔰Usage
 ### Widget list
-- `Alt-g Alt-h`: [Git Help Widget](#git-help-widget)
 - `Alt-g Alt-e`: [Git Emoji Selector](#git-emoji-selector)
 - `Alt-g Alt-s`: [Git Status Widget](#git-status-widget)
 - `Alt-g Alt-d`: [Git Diff Widget](#git-diff-widget)
@@ -32,6 +31,7 @@ source ~/.zshrc
 - `Alt-g Alt-c`: [Git Commit Widget](#git-commit-widget)
 - `Alt-g Alt-p Alt-s`: [Git Push Selector](#git-push-selector)
 - `Alt-g Alt-p Alt-l`: [Git Pull Selector](#git-pull-selector)
+- `Alt-g Alt-h`: [Git Help Widget](#git-help-widget)
 
 ### ⌨General Keybindings
 | Action                        | Key                            |
@@ -44,10 +44,6 @@ source ~/.zshrc
 | Preview-Up                    | Ctrl-k                         |
 | Preview-Down                  | Ctrl-j                         |
 | Toggle-Preview                | Alt-i                          |
-
-### ✨Git Help Widget✨
-⌨ Key map: `Alt-g Alt-h`  
-Show help.
 
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
@@ -103,5 +99,10 @@ You can select your branches and push to remote.
 ### ✨Git Pull Selector✨
 ⌨ Key map: `Alt-g Alt-p Alt-l`  
 You can select your branches and pull from remote.  
+
+### ✨Git Help Widget✨
+⌨ Key map: `Alt-g Alt-h`  
+Show help.
+
 
 ![image](https://user-images.githubusercontent.com/42331656/101117533-82727e80-362a-11eb-9ce1-dd2c8ea2c1f0.png)
