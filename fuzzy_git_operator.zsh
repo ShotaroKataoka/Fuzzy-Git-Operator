@@ -19,6 +19,14 @@ function _fgo_gitemoji_widget() {
   zle reset-prompt
 }
 
+# Git help
+function _fgo_help_widget() {
+  batcat ~/.fgo/data/help.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept"
+  echo 
+  echo 
+  zle reset-prompt
+}
+
 # Git status
 function _fgo_gitstatus_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
@@ -198,6 +206,8 @@ function _fgo_gitpush_widget() {
 
 zle     -N   _fgo_gitemoji_widget
 bindkey '\eg\ee' _fgo_gitemoji_widget
+zle     -N   _fgo_help_widget
+bindkey '\eg\eh' _fgo_help_widget
 zle     -N   _fgo_gitdiff_widget
 bindkey '\eg\ed' _fgo_gitdiff_widget
 zle     -N   _fgo_gitstatus_widget
