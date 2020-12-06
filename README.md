@@ -100,9 +100,8 @@ You can select your branches and push to remote.
 ⌨ Key map: `Alt-g Alt-p Alt-l`  
 You can select your branches and pull from remote.  
 
+![image](https://user-images.githubusercontent.com/42331656/101117533-82727e80-362a-11eb-9ce1-dd2c8ea2c1f0.png)
+
 ### ✨Git Help Widget✨
 ⌨ Key map: `Alt-g Alt-h`  
 Show help.
-
-
-![image](https://user-images.githubusercontent.com/42331656/101117533-82727e80-362a-11eb-9ce1-dd2c8ea2c1f0.png)
