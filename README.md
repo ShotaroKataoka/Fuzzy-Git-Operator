@@ -47,7 +47,8 @@ source ~/.zshrc
 
 ### ✨Git Emoji Selector✨
 ⌨ Key map: `Alt-g Alt-e`  
-You can select emoji for your joyful commit messages!  
+You can select [emoji](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjdwKP9_MDtAhUHx4sBHVs5BkIQFjAAegQIBRAC&url=https%3A%2F%2Fgist.github.com%2Frxaviers%2F7360908&usg=AOvVaw3GUfukqzTmILotl0Gi-xDe) for your joyful commit messages!  
+
 
 ![image](https://user-images.githubusercontent.com/42331656/101112422-96b17e00-3620-11eb-9ceb-1168356f63b2.png)
 
