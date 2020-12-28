@@ -101,7 +101,7 @@ function _fgo_gitcommit_widget() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local lbuf=$LBUFFER
-    local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
+    local tail=$RBUFFER  #${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
     LBUFFER="git commit -m \"""$lbuf$tail"
     RBUFFER=\"
   else
