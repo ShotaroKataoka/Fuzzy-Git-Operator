@@ -5,11 +5,11 @@ function _fgo_gitissue_selector() {
     local lbuf=$LBUFFER
     local tail=$RBUFFER
     local issue_list=$(gh issue list --state all --limit 10000)
-    issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t+OPEN/\\033[32m\#\1 Open\\033[0m/g')
-    issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t+CLOSED/\\033[31m\#\1 Close\\033[0m/g')
+    issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t+OPEN/\\033[32m\#\1\tOpen\\033[0m/g')
+    issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t+CLOSED/\\033[31m\#\1\tClose\\033[0m/g')
 
-    issue_list=$(echo "$issue_list" | sed -r 's/\t([a-zA-Z0-9 \f\n\r\-]*)/\\033[33m\t\1\\033[0m/2')
-    issue_list=$(echo "$issue_list" | sed -r 's/\t([0-9\-]*) ?[0-9\:]* ?[0-9\+]* ?[a-zA-Z]*/\\033[34m\t\1\\033[0m/3')
+    issue_list=$(echo "$issue_list" | sed -r 's/\t([^\t]*)/\\033[33m\t\1\\033[0m/3')
+    issue_list=$(echo "$issue_list" | sed -r 's/\t([0-9\-]*) ?[0-9\:]* ?[0-9\+]* ?[a-zA-Z]*/\\033[34m\t\1\\033[0m/4')
 
     # issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t/\\033[31m\#\1\\033[0m/g')
     issue_list=$(echo "$issue_list" | column -t -s $'\t')
