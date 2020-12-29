@@ -1,3 +1,12 @@
+# Github help
+function _fgo_help_github_widget() {
+  batcat ~/.fgo/data/help_github.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Github help" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept"
+  echo 
+  echo 
+  zle reset-prompt
+}
+
+
 # Github issue
 function _fgo_gitissue_selector() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
@@ -40,3 +49,5 @@ zle     -N   _fgo_gitissue_selector
 bindkey '\eg\eh\ei' _fgo_gitissue_selector
 zle     -N   _fgo_github_widget
 bindkey '\eg\eh\ew' _fgo_github_widget
+zle     -N   _fgo_help_github_widget
+bindkey '\eg\eh\eh' _fgo_help_github_widget
