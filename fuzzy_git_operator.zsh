@@ -21,7 +21,7 @@ function _fgo_gitemoji_widget() {
 
 # Git help
 function _fgo_help_widget() {
-  batcat ~/.fgo/data/help.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept"
+  batcat ~/.fgo/data/help.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Git help" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept"
   echo 
   echo 
   zle reset-prompt
