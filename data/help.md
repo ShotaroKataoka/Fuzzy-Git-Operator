@@ -1,5 +1,6 @@
 # Widget list
 - Git Help Widget               | Alt-g Alt-h
+- Github Help Widget            | Alt-g Alt-h Alt-h
 - Git Emoji Selector            | Alt-g Alt-e
 - Git Status Widget             | Alt-g Alt-s
 - Git Diff Widget               | Alt-g Alt-d
