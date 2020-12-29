@@ -1,4 +1,5 @@
 # Widget list
+- Git Help Widget               | Alt-g Alt-h
 - Github Help Widget            | Alt-g Alt-h Alt-h
 - Github Issue Selector         | Alt-g Alt-h Alt-i
 - Github Open WEB Widget        | Alt-g Alt-h Alt-w
