@@ -1,5 +1,5 @@
 # Git commit 
-function _fgo_gitissue_widget() {
+function _fgo_gitissue_selector() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local lbuf=$LBUFFER
@@ -23,5 +23,5 @@ function _fgo_gitissue_widget() {
 }
 
 
-zle     -N   _fgo_gitissue_widget
-bindkey '\eg\eh\ei' _fgo_gitissue_widget
+zle     -N   _fgo_gitissue_selector
+bindkey '\eg\eh\ei' _fgo_gitissue_selector
