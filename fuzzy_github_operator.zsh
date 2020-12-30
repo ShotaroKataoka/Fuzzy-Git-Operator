@@ -11,9 +11,9 @@ function _fgo_help_github_widget() {
 function _fgo_gitissue_selector() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -f ~/.fgo/user/color_scheme.txt ]; then
-    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.txt | tr '\n' ',' | sed 's/,$//')
+    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.txt | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
-    local _fgo_color_scheme="bg:#000000"
+    local _fgo_color_scheme="dark"
   fi
   echo 0 >| ~/.fgo/data/.status/.issue_end.status
   echo 0 >| ~/.fgo/data/.status/.issue_state.status
