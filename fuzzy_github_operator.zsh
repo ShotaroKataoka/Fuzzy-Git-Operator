@@ -69,8 +69,5 @@ function _fgo_github_widget() {
 }
 
 zle     -N   _fgo_gitissue_selector
-bindkey '\eg\eh\ei' _fgo_gitissue_selector
 zle     -N   _fgo_github_widget
-bindkey '\eg\eh\ew' _fgo_github_widget
 zle     -N   _fgo_help_github_widget
-bindkey '\eg\eh\eh' _fgo_help_github_widget

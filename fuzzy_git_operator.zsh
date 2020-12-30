@@ -209,22 +209,12 @@ function _fgo_gitpush_widget() {
 }
 
 zle     -N   _fgo_gitemoji_widget
-bindkey '\eg\ee' _fgo_gitemoji_widget
 zle     -N   _fgo_help_widget
-bindkey '\eg\eh' _fgo_help_widget
 zle     -N   _fgo_gitdiff_widget
-bindkey '\eg\ed' _fgo_gitdiff_widget
 zle     -N   _fgo_gitstatus_widget
-bindkey '\eg\es' _fgo_gitstatus_widget
 zle     -N   _fgo_gitadd_widget
-bindkey '\eg\ea' _fgo_gitadd_widget
 zle     -N   _fgo_gitcommit_widget
-bindkey '\eg\ec' _fgo_gitcommit_widget
 zle     -N   _fgo_gitlog_widget
-bindkey '\eg\el' _fgo_gitlog_widget
 zle     -N   _fgo_gitbranch_widget
-bindkey '\eg\eb' _fgo_gitbranch_widget
 zle     -N   _fgo_gitpull_widget
-bindkey '\eg\ep\el' _fgo_gitpull_widget
 zle     -N   _fgo_gitpush_widget
-bindkey '\eg\ep\es' _fgo_gitpush_widget
