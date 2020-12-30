@@ -69,6 +69,6 @@ function _fgo_github_widget() {
   zle reset-prompt
 }
 
-zle     -N   _fgo_gitissue_selector
-zle     -N   _fgo_github_widget
-zle     -N   _fgo_help_github_widget
+zle -N _fgo_gitissue_selector
+zle -N _fgo_github_widget
+zle -N _fgo_help_github_widget
