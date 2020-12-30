@@ -19,4 +19,4 @@
 - Toggle show Open/Closed issue | Alt-t
 - Reopen issue                  | Alt-o
 - Close issue                   | Alt-p
-
+- Toggle-Preview (View issue)   | Alt-i
