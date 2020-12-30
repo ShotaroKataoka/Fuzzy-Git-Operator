@@ -1,0 +1,13 @@
+bg:#000000
+bg+:#3F3F3F
+info:#E12672
+border:#6B6B6B
+spinner:#98BC99
+hl:#719872
+fg:#D9D9D9
+header:#eeee55
+fg+:#D9D9D9
+pointer:#E12672
+marker:#E17899
+prompt:#98BEDE
+hl+:#98BC99
