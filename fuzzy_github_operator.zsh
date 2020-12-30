@@ -22,8 +22,7 @@ function _fgo_gitissue_selector() {
 
     # issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t/\\033[31m\#\1\\033[0m/g')
     issue_list=$(echo "$issue_list" | column -t -s $'\t')
-
-    local issue_id=$(echo "$issue_list" | fzf --layout=reverse --border --cycle --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a}'" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept,alt-i:toggle-preview" --preview-window=:hidden)
+    local issue_id=$(echo "$issue_list" | fzf --layout=reverse --border --cycle --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a}'" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept,alt-w:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a} -w'),alt-i:toggle-preview" --preview-window=:hidden)
     issue_id=$(echo "$issue_id" | cut -d ' ' -f 1)
     LBUFFER="$lbuf$issue_id"
     RBUFFER="$tail"
