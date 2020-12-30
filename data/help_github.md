@@ -1,8 +1,8 @@
 # Widget list
-- Git Help Widget               | Alt-g Alt-h
-- Github Help Widget            | Alt-g Alt-h Alt-h
-- Github Issue Selector         | Alt-g Alt-h Alt-i
-- Github Open WEB Widget        | Alt-g Alt-h Alt-w
+- Git Help Widget               | Alt-gh
+- Github Help Widget            | Alt-ghh
+- Github Issue Selector         | Alt-ghi
+- Github Open WEB Widget        | Alt-ghw
 
 # General Keybindings
 - Cursor Up                     | Alt-k or Up
@@ -13,3 +13,9 @@
 - Preview-Up                    | Ctrl-k
 - Preview-Down                  | Ctrl-j
 - Toggle-Preview                | Alt-i
+
+# Github Issue Selector keybindings
+- Show in browser               | Alt-w
+- Reopen issue                  | Alt-o
+- Close issue                   | Alt-p
+

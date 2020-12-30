@@ -1,15 +1,15 @@
 # Widget list
-- Git Help Widget               | Alt-g Alt-h
-- Github Help Widget            | Alt-g Alt-h Alt-h
-- Git Emoji Selector            | Alt-g Alt-e
-- Git Status Widget             | Alt-g Alt-s
-- Git Diff Widget               | Alt-g Alt-d
-- Git Log Selector              | Alt-g Alt-l
-- Git Branch Selector           | Alt-g Alt-b
-- Git Add Selector              | Alt-g Alt-a
-- Git Commit Widget             | Alt-g Alt-c
-- Git Push Selector             | Alt-g Alt-p Alt-s
-- Git Pull Selector             | Alt-g Alt-p Alt-l
+- Git Help Widget               | Alt-gh
+- Github Help Widget            | Alt-ghh
+- Git Emoji Selector            | Alt-ge
+- Git Status Widget             | Alt-gs
+- Git Diff Widget               | Alt-gd
+- Git Log Selector              | Alt-gl
+- Git Branch Selector           | Alt-gb
+- Git Add Selector              | Alt-ga
+- Git Commit Widget             | Alt-gc
+- Git Push Selector             | Alt-gps
+- Git Pull Selector             | Alt-gpl
 
 # General Keybindings
 - Cursor Up                     | Alt-k or Up
