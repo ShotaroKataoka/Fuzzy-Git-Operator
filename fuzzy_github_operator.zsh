@@ -10,8 +10,8 @@ function _fgo_help_github_widget() {
 # Github issue
 function _fgo_gitissue_selector() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-  if [ -f ~/.fgo/user/color_scheme.txt ]; then
-    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.txt | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
+  if [ -f ~/.fgo/user/color_scheme.zsh ]; then
+    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
     local _fgo_color_scheme="dark"
   fi
