@@ -1,4 +1,5 @@
 cp ~/.fgo/data/git_emoji_list.txt ~/.fgo/user/
+cp ~/.fgo/data/color_scheme.txt ~/.fgo/user/
 echo "source ~/.fgo/fuzzy_git_operator.zsh" >> ~/.zshrc
 echo "source ~/.fgo/fuzzy_github_operator.zsh" >> ~/.zshrc
 source ~/.fgo/fuzzy_git_operator.zsh
