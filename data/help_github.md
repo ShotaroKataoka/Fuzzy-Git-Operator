@@ -16,6 +16,7 @@
 
 # Github Issue Selector keybindings
 - Show in browser               | Alt-w
+- Toggle show Open/Closed issue | Alt-t
 - Reopen issue                  | Alt-o
 - Close issue                   | Alt-p
 
