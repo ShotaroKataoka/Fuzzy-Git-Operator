@@ -1,9 +1,12 @@
 cp ~/.fgo/data/git_emoji_list.txt ~/.fgo/user/
-cp ~/.fgo/data/color_scheme.txt ~/.fgo/user/
+cp ~/.fgo/data/color_scheme.zsh ~/.fgo/user/
+cp ~/.fgo/data/fgo_keybindings.zsh ~/.fgo/user/
 echo "source ~/.fgo/fuzzy_git_operator.zsh" >> ~/.zshrc
 echo "source ~/.fgo/fuzzy_github_operator.zsh" >> ~/.zshrc
+echo "source ~/.fgo/user/fgo_keybindings.zsh" >> ~/.zshrc
 source ~/.fgo/fuzzy_git_operator.zsh
 source ~/.fgo/fuzzy_github_operator.zsh
+source ~/.fgo/user/fgo_keybindings.zsh
 
 # install fzf
 if [ "$(which fzf)" = "fzf not found" ]; then
