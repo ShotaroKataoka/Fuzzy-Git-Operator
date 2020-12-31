@@ -74,6 +74,31 @@ function _fgo_github_widget() {
   zle reset-prompt
 }
 
+# Github create issue
+function _fgo_github_create_issue_widget() {
+  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  if [ -n "$_is_git_dir" ]; then
+    local REPLY
+    autoload -Uz read-from-minibuffer
+    read-from-minibuffer 'Issue title: ' 
+    local _issue_title=$REPLY
+    read-from-minibuffer 'Issue body: ' 
+    local _issue_body=$REPLY
+    read-from-minibuffer 'Issue label: ' 
+    local _issue_label=$REPLY
+    read-from-minibuffer "Send Issue: '"$_issue_title"'? (y/n) " 
+    if [ "$REPLY" = "y" ]; then
+      gh issue create --title "$_issue_title" --body "$_issue_body" --label "$_issue_label"
+    fi
+    sleep 0.1s
+    echo
+    echo
+    echo
+  fi
+  zle reset-prompt
+}
+
 zle -N _fgo_gitissue_selector
 zle -N _fgo_github_widget
 zle -N _fgo_help_github_widget
+zle -N _fgo_github_create_issue_widget

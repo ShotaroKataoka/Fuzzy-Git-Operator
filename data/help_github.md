@@ -2,6 +2,7 @@
 - Git Help Widget               | Alt-gh
 - Github Help Widget            | Alt-ghh
 - Github Issue Selector         | Alt-ghi
+- Github Issue Creator          | Alt-ghci
 - Github Open WEB Widget        | Alt-ghw
 
 # General Keybindings
