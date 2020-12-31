@@ -3,6 +3,7 @@
 - Github Help Widget            | Alt-ghh
 - Github Issue Selector         | Alt-ghi
 - Github Issue Creator          | Alt-ghci
+- Github PR Creator             | Alt-ghcp
 - Github Open WEB Widget        | Alt-ghw
 
 # General Keybindings

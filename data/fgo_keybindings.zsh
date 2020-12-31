@@ -15,3 +15,4 @@ bindkey '\eg\eh\ei' _fgo_gitissue_selector
 bindkey '\eg\eh\ew' _fgo_github_widget
 bindkey '\eg\eh\eh' _fgo_help_github_widget
 bindkey '\eg\eh\ec\ei' _fgo_github_create_issue_widget
+bindkey '\eg\eh\ec\ep' _fgo_github_create_pr_widget
