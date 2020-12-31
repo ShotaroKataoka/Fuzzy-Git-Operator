@@ -1,5 +1,5 @@
 # 🎉🎉Fuzzy Git Operator🎉🎉
-An interactive Git Operator on Terminal🚀
+An interactive Git Operator on zsh Terminal🚀
 - Easy Git Operation
 - Enjoy colorful developing with [emoji-prefix](https://goodpatch.com/blog/beautiful-commits-with-emojis/) commit messages!
 
@@ -13,12 +13,12 @@ source ~/.fgo/install.zsh
 ```bash
 cd ~/.fgo
 git pull origin main
-source ~/.zshrc
+source ~/.fgo/update.zsh
 ```
 
 ## 🚮Uninstall
 1. Delete `~/.fgo`
-1. Remove `source ~/.fgo/fuzzy_git_operator.zsh` from `~/.zshrc`
+1. Remove `source ~/.fgo/fgo.zsh` from `~/.zshrc`
 
 ## 🔰Usage
 ### Widget list
