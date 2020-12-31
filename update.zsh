@@ -36,47 +36,9 @@ if [ ! -f ~/.fgo/user/fgo_keybindings.zsh ]; then
 else
   echo "  -$_ANSI_COLOR_SUCCESS Already exists$_ANSI_COLOR_END '~/.fgo/user/fgo_keybindings.zsh'"
 fi
-
-if [ ! -n "$(cat ~/.zshrc | grep 'source ~/.fgo/fgo.zsh')" ]; then
-  echo "# Fuzzy-Git-Operator" >> ~/.zshrc
-  echo "source ~/.fgo/fgo.zsh" >> ~/.zshrc
-  if [ $(echo $?) -eq 0 ]; then
-    echo "  -$_ANSI_COLOR_SUCCESS Done:$_ANSI_COLOR_END Write running trriger to '~/.zshrc'"
-  else
-    echo "  -$_ANSI_COLOR_ERROR Failed:$_ANSI_COLOR_END Write 'source ~/.fgo/fgo.zsh' to '~/.zshrc'"
-  fi
-else
-  echo "  -$_ANSI_COLOR_SUCCESS Already exists$_ANSI_COLOR_END running trriger in '~/.zshrc'"
-fi
 source ~/.fgo/fgo.zsh
 
-# install fzf
-echo "- Start install fzf"
-if [ "$(which fzf)" = "fzf not found" ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-  if [ $(echo $?) -eq 0 ]; then
-    echo "  -$_ANSI_COLOR_SUCCESS Done:$_ANSI_COLOR_END Install fzf."
-  else
-    echo "  -$_ANSI_COLOR_ERROR Failed:$_ANSI_COLOR_END Install fzf."
-  fi
-else
-  echo "  -$_ANSI_COLOR_SUCCESS Already installed$_ANSI_COLOR_END fzf"
-fi
-
-# install bat
-echo "- Start install bat"
-if [ "$(which batcat)" = "batcat not found" ]; then
-  sudo apt install bat
-  if [ $(echo $?) -eq 0 ]; then
-    echo "  -$_ANSI_COLOR_SUCCESS Done:$_ANSI_COLOR_END Install bat."
-  else
-    echo "  -$_ANSI_COLOR_ERROR Failed:$_ANSI_COLOR_END Install bat."
-  fi
-else
-  echo "  -$_ANSI_COLOR_SUCCESS Already installed$_ANSI_COLOR_END bat"
-fi
-
 echo
-echo "$_ANSI_COLOR_SUCCESS Install complete.$_ANSI_COLOR_END"
+echo "$_ANSI_COLOR_SUCCESS Update complete.$_ANSI_COLOR_END"
+echo " If you want to update above files, try $_ANSI_COLOR_WARN'cp ~/.fgo/data/<file> ~/.fgo/user/'$_ANSI_COLOR_END."
 
