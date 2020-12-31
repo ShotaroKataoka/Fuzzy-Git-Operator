@@ -1,9 +1,10 @@
 local _ANSI_COLOR_ERROR="\\033[31;1m"
 local _ANSI_COLOR_SUCCESS="\\033[32m"
-local _ANSI_COLOR_WARN="\\033[33m"
+local _ANSI_COLOR_WARN="\\033[33;1m"
+local _ANSI_COLOR_ACCENT="\\033[36;1m"
 local _ANSI_COLOR_END="\\033[0m"
 
-echo "- Start update Fuzzy-Git-Operator!"
+echo "- Start update$_ANSI_COLOR_ACCENT Fuzzy-Git-Operator$_ANSI_COLOR_END!"
 if [ ! -f ~/.fgo/user/git_emoji_list.txt ]; then
   cp ~/.fgo/data/git_emoji_list.txt ~/.fgo/user/
   if [ $(echo $?) -eq 0 ]; then
