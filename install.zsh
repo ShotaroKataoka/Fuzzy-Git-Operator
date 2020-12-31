@@ -1,12 +1,18 @@
-cp ~/.fgo/data/git_emoji_list.txt ~/.fgo/user/
-cp ~/.fgo/data/color_scheme.zsh ~/.fgo/user/
-cp ~/.fgo/data/fgo_keybindings.zsh ~/.fgo/user/
-echo "source ~/.fgo/fuzzy_git_operator.zsh" >> ~/.zshrc
-echo "source ~/.fgo/fuzzy_github_operator.zsh" >> ~/.zshrc
-echo "source ~/.fgo/user/fgo_keybindings.zsh" >> ~/.zshrc
-source ~/.fgo/fuzzy_git_operator.zsh
-source ~/.fgo/fuzzy_github_operator.zsh
-source ~/.fgo/user/fgo_keybindings.zsh
+if [ ! -f ~/.fgo/user/git_emoji_list.txt ];then
+  cp ~/.fgo/data/git_emoji_list.txt ~/.fgo/user/
+fi
+if [ ! -f ~/.fgo/user/color_scheme.zsh ]; then
+  cp ~/.fgo/data/color_scheme.zsh ~/.fgo/user/
+fi
+if [ ! -f ~/.fgo/user/fgo_keybindings.zsh ]; then
+  cp ~/.fgo/data/fgo_keybindings.zsh ~/.fgo/user/
+fi
+
+if [ ! -n "$(cat ~/.zshrc | grep 'source ~/.fgo/fgo.zsh')" ]; then
+  echo "# Fuzzy-Git-Operator" >> ~/.zshrc
+  echo "source ~/.fgo/fgo.zsh" >> ~/.zshrc
+fi
+source ~/.fgo/fgo.zsh
 
 # install fzf
 if [ "$(which fzf)" = "fzf not found" ]; then
@@ -27,3 +33,4 @@ fi
 
 
 echo "Install complete."
+
