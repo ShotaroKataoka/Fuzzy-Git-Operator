@@ -102,42 +102,7 @@ function _fgo_github_create_issue_widget() {
   zle reset-prompt
 }
 
-# Github create PR
-function _fgo_github_create_pr_widget() {
-  local _ANSI_COLOR_RED="\033[31;1m"
-  local _ANSI_COLOR_GREEN="\\033[32m"
-  local _ANSI_COLOR_YELLO="\\033[33;1m"
-  local _ANSI_COLOR_BLUE="\\033[36;1m"
-  local _ANSI_COLOR_END="\\033[0m"
-
-  local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
-  if [ -n "$_is_git_dir" ]; then
-    local REPLY
-    autoload -Uz read-from-minibuffer
-    read-from-minibuffer 'Base branch: ' 
-    local _pr_base=$REPLY
-    read-from-minibuffer 'Reviewers: ' 
-    local _pr_reviewer=$REPLY
-    local _current_branch=$(git branch --contains | grep '*' | sed 's/* //')
-    read-from-minibuffer "Send PR from:$_current_branch to:$_pr_base ? (y/n) " 
-    if [ "$REPLY" = "y" ]; then
-      gh pr create --base "$_pr_base" --reviewer "$_pr_reviewer" --fill
-    fi
-    sleep 0.1s
-    echo
-    echo
-    echo
-    echo
-  else
-    echo "not a git repository."
-    echo 
-    echo 
-  fi
-  zle reset-prompt
-}
-
 zle -N _fgo_gitissue_selector
 zle -N _fgo_github_widget
 zle -N _fgo_help_github_widget
 zle -N _fgo_github_create_issue_widget
-zle -N _fgo_github_create_pr_widget
