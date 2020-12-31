@@ -86,7 +86,7 @@ function _fgo_github_create_issue_widget() {
     local _issue_body=$REPLY
     read-from-minibuffer 'Issue label: ' 
     local _issue_label=$REPLY
-    read-from-minibuffer "Send Issue: '"$_issue_title"'? (y/n) " 
+    read-from-minibuffer "Send Issue? : '"$_issue_title"' (y/n) "
     if [ "$REPLY" = "y" ]; then
       gh issue create --title "$_issue_title" --body "$_issue_body" --label "$_issue_label"
     fi
