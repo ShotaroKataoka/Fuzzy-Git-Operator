@@ -127,6 +127,7 @@ function _fgo_github_create_pr_widget() {
     echo
     echo
     echo
+    echo
   else
     echo "not a git repository."
     echo 
