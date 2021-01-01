@@ -27,7 +27,7 @@ function _fgo_gitissue_selector() {
     do
       
       local _fet_status_state=$(( $(cat ~/.fgo/data/.status/.issue_state.status | wc -l) % 2 ))
-      _infobar="Alt-i:Info  Alt-o:Reopen  Alt-p:Close  Alt-t:Open/Closed  Alt-w:Web"
+      _infobar="ctrl-j/k:Info Down/Up  Alt-t:Open/Closed  Alt-w:Web  Alt-o:Reopen  Alt-p:Close  Alt-i:Info"
       if [ $_fet_status_state -eq 1 ]; then
         _state_var='open'
         _prompt='Open Issues >> '
