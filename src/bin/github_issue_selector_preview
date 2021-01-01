@@ -1,0 +1,101 @@
+#!/bin/zsh
+
+local _ANSI_COLOR_RED="\\033[31;1m"
+local _ANSI_COLOR_GREEN="\\033[32m"
+local _ANSI_COLOR_YELLOW="\\033[33m"
+local _ANSI_COLOR_LIGHT_YELLOW="\\033[33;1m"
+local _ANSI_COLOR_BLUE="\\033[36;1m"
+local _ANSI_COLOR_GRAY="\\033[38;05;245m"
+local _ANSI_COLOR_END="\\033[0m"
+
+local _ANSI_COLOR_LABELS="\\033[36;1m"
+local _ANSI_COLOR_PROJECTS="\\033[38;05;202m"
+local _ANSI_COLOR_MILESTONE="\\033[38;05;140m"
+local _ANSI_COLOR_ASSIGNEES="\\033[33;1m"
+
+read;
+if [ -n "$REPLY" ]; then
+  echo "Issue $REPLY:"
+  _input=$(gh issue view $REPLY)
+
+  _title=$(echo "$_input" | grep '^title:' | sed -r 's/^title:\t(.*)/\1/1')
+  _state=$(echo "$_input" | grep '^state:' | sed -r 's/^state:\t(.*)/\1/1')
+  _author=$(echo "$_input" | grep '^author:' | sed -r 's/^author:\t(.*)/\1/1')
+  _labels=$(echo "$_input" | grep '^labels:' | sed -r 's/^labels:\t(.*)/\1/1')
+  _comments=$(echo "$_input" | grep '^comments:' | sed -r 's/^comments:\t(.*)/\1/1')
+  _assignees=$(echo "$_input" | grep '^assignees:' | sed -r 's/^assignees:\t(.*)/\1/1')
+  _projects=$(echo "$_input" | grep '^projects:' | sed -r 's/^projects:\t(.*)/\1/1')
+  _milestone=$(echo "$_input" | grep '^milestone:' | sed -r 's/^milestone:\t(.*)/\1/1')
+  _body="$(echo "$_input" | sed -n '10,$p')"
+
+  # Title
+  _LINE_SIZE=$(echo $(tput cols) \* 0.55 | bc | cut -f 1 -d '.')
+  echo "$_ANSI_COLOR_YELLOW""$_title" | fold -w $_LINE_SIZE
+  echo "$_ANSI_COLOR_END"
+
+  # Information
+  if [ "$_state" = "OPEN" ]; then
+    echo "$_ANSI_COLOR_GREEN$_state$_ANSI_COLOR_END"" • $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END • $_comments comments"
+  else
+    echo "$_ANSI_COLOR_RED$_state$_ANSI_COLOR_END"" • $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END • $_comments comments"
+  fi
+  
+  # Labels
+  echo Labels: "$_ANSI_COLOR_LABELS$_labels$_ANSI_COLOR_END"
+
+  # Projects
+  if [ -n "$_projects" ]; then
+    echo Projects: "$_ANSI_COLOR_PROJECTS$_projects$_ANSI_COLOR_END"
+  fi
+
+  # Milestone
+  if [ -n "$_milestone" ]; then
+    echo Milestone: "$_ANSI_COLOR_MILESTONE$_milestone$_ANSI_COLOR_END"
+  fi
+
+  # Assignees
+  if [ -n "$_assignees" ]; then
+    echo Assignees: "$_ANSI_COLOR_ASSIGNEES$_assignees$_ANSI_COLOR_END"
+  fi
+
+  # Issue body
+  echo "$_ANSI_COLOR_GRAY"
+  echo "———————————————————————— Issue body ————————————————————————"
+  echo "$_ANSI_COLOR_END"
+
+  echo "$_body" | batcat -l md --color=always --style='numbers'
+
+
+  # Comments
+  local _comments="$(gh issue view $REPLY --comments)"
+  if [ -n "$_comments" ]; then
+    echo "$_ANSI_COLOR_GRAY"
+    echo "————————————————————————  Comments  ————————————————————————"
+    echo "$_ANSI_COLOR_END"
+
+    local _comment_index=($(echo $(echo "$_comments" | grep "^author:" -n | cut -f 1 -d ':')))
+    local _comments_num=${#_comment_index[@]}
+    for i in {1..$_comments_num}
+    do
+      local _comment_start=$(echo ${_comment_index[i]})
+      if [ $i -lt $_comments_num ]; then
+        local _comment_end=$(echo ${_comment_index[i+1]})
+        _author=$(echo "$_comments" | sed -n $_comment_start'p' | sed -r 's/^author:\t(.*)/\1/1')
+        echo "commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
+        echo
+        _body="$(echo "$_comments" | sed -n $(expr $_comment_start + 4)','$(expr $_comment_end - 2)'p')"
+      else
+        _author=$(echo "$_comments" | sed -n $_comment_start'p' | sed -r 's/^author:\t(.*)/\1/1')
+        echo "commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
+        echo
+        _body="$(echo "$_comments" | sed -n $(expr $_comment_start + 4)',$p' | sed '$d')"
+      fi
+      echo $_body | batcat -l md --color=always --style='numbers'
+      echo "$_ANSI_COLOR_GRAY"
+      echo "————————————————————————————————————————————————————————————"
+      echo "$_ANSI_COLOR_END"
+    done
+  fi
+else
+  echo "cannot get issue num."
+fi
