@@ -60,22 +60,43 @@ if [ -n "$REPLY" ]; then
 
   # Issue body
   echo "$_ANSI_COLOR_GRAY"
-  echo "———————————————————————— Issue body ————————————————————————"
+  local _char_num=$(echo $(expr "$_LINE_SIZE" - 12) \* 0.33 | bc | cut -d '.' -f 1)
+  local _char=''
+  for i in {1..$_char_num}
+  do
+    _char='─'$_char
+  done
+  echo "$_char Issue body $_char"
   echo "$_ANSI_COLOR_END"
 
   echo "$_body" | batcat -l md --color=always --style='numbers'
 
   echo "$_ANSI_COLOR_GRAY"
-  echo "————————————————————————————————————————————————————————————"
+  local _char_num=$(echo $(expr "$_LINE_SIZE" - 12) \* 0.33 \* 2 | bc | cut -d '.' -f 1)
+  local _char=''
+  for i in {1..$_char_num}
+  do
+    _char='─'$_char
+  done
+  echo "────────────$_char"
   echo "$_ANSI_COLOR_END"
 
   # Comments
   local _comments="$(gh issue view $REPLY --comments)"
   if [ -n "$_comments" ]; then
     echo "$_ANSI_COLOR_GRAY"
-    echo "╭──────────────────────────────────────────────────────────╮"
-    echo "│                         Comments                         │"
-    echo "╰──────────────────────────────────────────────────────────╯"
+    local _char_num=$(echo $(expr "$_LINE_SIZE" - 12) \* 0.33 | bc | cut -d '.' -f 1)
+    local _char_line=''
+    local _char_space=''
+    for i in {1..$_char_num}
+    do
+      _char_line='─'$_char_line
+      _char_space=' '$_char_space
+    done
+
+    echo "╭──────────$_char_line$_char_line╮"
+    echo "│$_char_space Comments$_char_space │"
+    echo "╰──────────$_char_line$_char_line╯"
     echo "$_ANSI_COLOR_END"
 
     local _comment_index=($(echo $(echo "$_comments" | grep "^author:" -n | cut -f 1 -d ':')))
@@ -97,7 +118,7 @@ if [ -n "$REPLY" ]; then
       fi
       echo $_body | batcat -l md --color=always --style='numbers'
       echo "$_ANSI_COLOR_GRAY"
-      echo " —————————————————————————————————————————————————————————— "
+      echo "────────────$_char_line$_char_line"
       echo "$_ANSI_COLOR_END"
     done
   fi
