@@ -65,12 +65,17 @@ if [ -n "$REPLY" ]; then
 
   echo "$_body" | batcat -l md --color=always --style='numbers'
 
+  echo "$_ANSI_COLOR_GRAY"
+  echo "————————————————————————————————————————————————————————————"
+  echo "$_ANSI_COLOR_END"
 
   # Comments
   local _comments="$(gh issue view $REPLY --comments)"
   if [ -n "$_comments" ]; then
     echo "$_ANSI_COLOR_GRAY"
-    echo "————————————————————————  Comments  ————————————————————————"
+    echo "╭──────────────────────────────────────────────────────────╮"
+    echo "│                         Comments                         │"
+    echo "╰──────────────────────────────────────────────────────────╯"
     echo "$_ANSI_COLOR_END"
 
     local _comment_index=($(echo $(echo "$_comments" | grep "^author:" -n | cut -f 1 -d ':')))
@@ -81,18 +86,18 @@ if [ -n "$REPLY" ]; then
       if [ $i -lt $_comments_num ]; then
         local _comment_end=$(echo ${_comment_index[i+1]})
         _author=$(echo "$_comments" | sed -n $_comment_start'p' | sed -r 's/^author:\t(.*)/\1/1')
-        echo "commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
+        echo " commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
         echo
         _body="$(echo "$_comments" | sed -n $(expr $_comment_start + 4)','$(expr $_comment_end - 2)'p')"
       else
         _author=$(echo "$_comments" | sed -n $_comment_start'p' | sed -r 's/^author:\t(.*)/\1/1')
-        echo "commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
+        echo " commented by $_ANSI_COLOR_LIGHT_YELLOW$_author$_ANSI_COLOR_END"
         echo
         _body="$(echo "$_comments" | sed -n $(expr $_comment_start + 4)',$p' | sed '$d')"
       fi
       echo $_body | batcat -l md --color=always --style='numbers'
       echo "$_ANSI_COLOR_GRAY"
-      echo "————————————————————————————————————————————————————————————"
+      echo " —————————————————————————————————————————————————————————— "
       echo "$_ANSI_COLOR_END"
     done
   fi
