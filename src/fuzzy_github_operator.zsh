@@ -82,11 +82,21 @@ function _fgo_github_create_issue_widget() {
     autoload -Uz read-from-minibuffer
     read-from-minibuffer 'Issue title: ' 
     local _issue_title=$REPLY
-    read-from-minibuffer 'Issue body: ' 
+    echo
+    read-from-minibuffer 'Body (or e: Edit with vim): '
     local _issue_body=$REPLY
-    read-from-minibuffer 'Issue label: ' 
+    echo
+    if [ "$_issue_body" = "e" ]; then
+      echo "$_issue_title" >| ~/.fgo/data/buf
+      echo "$HOME/.fgo/data/buf" | xargs -o vim
+      _issue_body=$(cat ~/.fgo/data/buf)
+      rm -f ~/.fgo/data/buf
+    fi
+    read-from-minibuffer 'Label: '
     local _issue_label=$REPLY
-    read-from-minibuffer "Send Issue? : '"$_issue_title"' (y/n) "
+    echo
+    read-from-minibuffer 'Send Issue? : '"$_issue_title"'(y/n): '
+    echo
     if [ "$REPLY" = "y" ]; then
       gh issue create --title "$_issue_title" --body "$_issue_body" --label "$_issue_label"
       local _status=$?
