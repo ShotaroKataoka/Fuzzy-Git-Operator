@@ -89,6 +89,12 @@ function _fgo_github_create_issue_widget() {
     read-from-minibuffer "Send Issue? : '"$_issue_title"' (y/n) "
     if [ "$REPLY" = "y" ]; then
       gh issue create --title "$_issue_title" --body "$_issue_body" --label "$_issue_label"
+      local _status=$?
+      if [ ! $_status = 0 ]; then
+        echo "Faild: Could not send a issue."
+      fi
+    else
+      echo "Did not send a issue."
     fi
     sleep 0.1s
     echo
