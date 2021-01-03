@@ -87,7 +87,29 @@ function _fgo_github_create_issue_widget() {
     local _issue_body=$REPLY
     echo
     if [ "$_issue_body" = "e" ]; then
-      echo "<!-- Title: $_issue_title --!>\n" >| ~/.fgo/data/buf.md
+      echo "<!-- Title: $_issue_title --!>" >| ~/.fgo/data/buf.md
+      if [ -d "$HOME/.fgo/.github/ISSUE_TEMPLATE" ]; then 
+        local _templates=($(ls $HOME/.fgo/.github/ISSUE_TEMPLATE))
+        local _template_conts='without Template'
+        local -A _templates_dict=()
+        for _template in $_templates
+        do
+          local _template_cont=$(echo "$(head -15 $HOME/.fgo/.github/ISSUE_TEMPLATE/$_template | grep -e "^name:" -e "^about" | sed -r 's/^name: (.*)/\1/1' | sed -r 's/^about: (.*)/\1/1' | tr '\n' ':' | sed 's/:$//1' | sed 's/:/ : /1')")
+          _template_conts="$_template_conts\n$_template_cont"
+          _templates_dict[$_template_cont]=$_template
+        done
+        local selected_temp=$(echo "$_template_conts" | fzf -m --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept')
+        if [ ! "$selected_temp" = "without Template" ]; then
+          _template=$(cat $HOME/.fgo/.github/ISSUE_TEMPLATE/${_templates_dict[$selected_temp]})
+          local _template_start_num=$(expr $(echo "$_template" | grep -n -m2 '^---' | tail -n1 | cut -f1 -d:) + 1)
+          _template=$(echo "$_template" | sed -n $_template_start_num',$p')
+          echo "$_template" >> ~/.fgo/data/buf.md
+        else
+          echo >> ~/.fgo/data/buf.md
+        fi
+      else
+        echo >> ~/.fgo/data/buf.md
+      fi
       echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
       _issue_body=$(cat ~/.fgo/data/buf.md)
       rm -f ~/.fgo/data/buf.md
