@@ -87,10 +87,10 @@ function _fgo_github_create_issue_widget() {
     local _issue_body=$REPLY
     echo
     if [ "$_issue_body" = "e" ]; then
-      echo "$_issue_title" >| ~/.fgo/data/buf
-      echo "$HOME/.fgo/data/buf" | xargs -o vim
-      _issue_body=$(cat ~/.fgo/data/buf)
-      rm -f ~/.fgo/data/buf
+      echo "<!-- Title: $_issue_title --!>\n" >| ~/.fgo/data/buf.md
+      echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
+      _issue_body=$(cat ~/.fgo/data/buf.md)
+      rm -f ~/.fgo/data/buf.md
     fi
     read-from-minibuffer 'Label: '
     local _issue_label=$REPLY
