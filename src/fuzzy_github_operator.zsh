@@ -99,7 +99,7 @@ function _fgo_github_create_issue_widget() {
           _templates_dict[$_template_cont]=$_template
         done
         local selected_temp=$(echo "$_template_conts" | fzf -m --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept')
-        if [ ! "$selected_temp" = "without Template" ]; then
+        if [ ! "$selected_temp" = "without Template" -a -n "$selected_temp" ]; then
           _template=$(cat $HOME/.fgo/.github/ISSUE_TEMPLATE/${_templates_dict[$selected_temp]})
           local _template_start_num=$(expr $(echo "$_template" | grep -n -m2 '^---' | tail -n1 | cut -f1 -d:) + 1)
           _template=$(echo "$_template" | sed -n $_template_start_num',$p')
