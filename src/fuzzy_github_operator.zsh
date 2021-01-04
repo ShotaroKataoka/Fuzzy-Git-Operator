@@ -110,6 +110,7 @@ function _fgo_github_create_issue_widget() {
       if [ -d "$HOME/.fgo/.github/ISSUE_TEMPLATE" ]; then 
         _templates="$_templates\n"$(ls $HOME/.fgo/.github/ISSUE_TEMPLATE)
       fi
+      local _body_interrupt=0
       if [ ! "$_templates" = "\\033[31m"'without Template'"\\033[0m" ]; then
         local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview,left:abort,right:accept' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
         if [ -n "$selected_temp" ]; then
@@ -126,15 +127,18 @@ function _fgo_github_create_issue_widget() {
             echo "$_template" >> ~/.fgo/data/buf.md
           fi
         else
-          echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
-          echo >> ~/.fgo/data/buf.md
+          _body_interrupt=1
         fi
       else
         echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
         echo >> ~/.fgo/data/buf.md
       fi
-      echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
-      _issue_body=$(cat ~/.fgo/data/buf.md)
+      if [ ! $_body_interrupt -eq 1 ]; then
+        echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
+        _issue_body=$(cat ~/.fgo/data/buf.md)
+      else
+        _issue_body=''
+      fi
     fi
     read-from-minibuffer 'Label: '
     local _issue_label=$REPLY
