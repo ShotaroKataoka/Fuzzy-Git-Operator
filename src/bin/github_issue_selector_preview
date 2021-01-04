@@ -22,7 +22,7 @@ else
     local issue_num="$REPLY"
     local pipe_mode='true'
   else
-    echo "error: empty imput." 1>&2
+    echo "error: empty input." 1>&2
     return 1
   fi
 fi
