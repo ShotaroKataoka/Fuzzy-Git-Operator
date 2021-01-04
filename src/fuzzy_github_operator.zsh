@@ -105,21 +105,17 @@ function _fgo_github_create_issue_widget() {
     if [ "$_issue_body" = "e" ]; then
       echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
       if [ -d "$HOME/.fgo/.github/ISSUE_TEMPLATE" ]; then 
-        local _templates=($(ls $HOME/.fgo/.github/ISSUE_TEMPLATE))
-        local _template_conts='without Template'
-        local -A _templates_dict=()
-        for _template in $_templates
-        do
-          local _template_cont=$(echo "$(head -15 $HOME/.fgo/.github/ISSUE_TEMPLATE/$_template | grep -e "^name:" -e "^about" | sed -r 's/^name: (.*)/\1/1' | sed -r 's/^about: (.*)/\1/1' | tr '\n' ':' | sed 's/:$//1' | sed 's/:/ : /1')")
-          _template_conts="$_template_conts\n$_template_cont"
-          _templates_dict[$_template_cont]=$_template
-        done
-        local selected_temp=$(echo "$_template_conts" | fzf -m --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept')
-        if [ ! "$selected_temp" = "without Template" -a -n "$selected_temp" ]; then
-          _template=$(cat $HOME/.fgo/.github/ISSUE_TEMPLATE/${_templates_dict[$selected_temp]})
-          local _template_start_num=$(expr $(echo "$_template" | grep -n -m2 '^---' | tail -n1 | cut -f1 -d:) + 1)
-          _template=$(echo "$_template" | sed -n $_template_start_num',$p')
-          echo "$_template" >> ~/.fgo/data/buf.md
+        local _templates="\\033[31m"'without Template'"\\033[0m\n"$(ls $HOME/.fgo/.github/ISSUE_TEMPLATE)
+        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
+        if [ -n "$selected_temp" ]; then
+          if [ "$selected_temp" = "without Template" ]; then
+            echo >> ~/.fgo/data/buf.md
+          else
+            _template=$(cat $HOME/.fgo/.github/ISSUE_TEMPLATE/$selected_temp)
+            local _template_start_num=$(expr $(echo "$_template" | grep -n -m2 '^---' | tail -n1 | cut -f1 -d:) + 1)
+            _template=$(echo "$_template" | sed -n $_template_start_num',$p')
+            echo "$_template" >> ~/.fgo/data/buf.md
+          fi
         else
           echo >> ~/.fgo/data/buf.md
         fi
