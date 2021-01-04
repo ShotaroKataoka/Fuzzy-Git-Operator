@@ -103,7 +103,7 @@ function _fgo_github_create_issue_widget() {
     local _issue_body=$REPLY
     echo
     if [ "$_issue_body" = "e" ]; then
-      echo "<!-- Title: $_issue_title --!>" >| ~/.fgo/data/buf.md
+      echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
       if [ -d "$HOME/.fgo/.github/ISSUE_TEMPLATE" ]; then 
         local _templates=($(ls $HOME/.fgo/.github/ISSUE_TEMPLATE))
         local _template_conts='without Template'
