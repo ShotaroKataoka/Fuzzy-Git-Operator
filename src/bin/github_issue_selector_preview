@@ -41,7 +41,6 @@ _milestone=$(echo "$_input" | grep '^milestone:' | sed -r 's/^milestone:\t(.*)/\
 _body="$(echo "$_input" | sed -n '10,$p')"
 
 # Title
-echo $pipe_mode
 if [ "$pipe_mode" = "true" ]; then
   _LINE_SIZE=$(echo $(tput cols) \* 0.55 | bc | cut -f 1 -d '.')
 else;
