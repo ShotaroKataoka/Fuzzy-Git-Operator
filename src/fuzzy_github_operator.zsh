@@ -103,10 +103,42 @@ function _fgo_github_create_issue_widget() {
     local _issue_body=$REPLY
     echo
     if [ "$_issue_body" = "e" ]; then
-      echo "<!-- Title: $_issue_title --!>\n" >| ~/.fgo/data/buf.md
-      echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
-      _issue_body=$(cat ~/.fgo/data/buf.md)
-      rm -f ~/.fgo/data/buf.md
+      local _templates="\\033[31m"'without Template'"\\033[0m"
+      if [ -f "$HOME/.fgo/data/buf.md" ]; then
+        _templates="\\033[32m"'Left off last time'"\\033[0m\n$_templates"
+      fi
+      if [ -d "$HOME/.fgo/.github/ISSUE_TEMPLATE" ]; then 
+        _templates="$_templates\n"$(ls $HOME/.fgo/.github/ISSUE_TEMPLATE)
+      fi
+      local _body_interrupt=0
+      if [ ! "$_templates" = "\\033[31m"'without Template'"\\033[0m" ]; then
+        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview,left:abort,right:accept' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
+        if [ -n "$selected_temp" ]; then
+          if [ "$selected_temp" = "without Template" ]; then
+            echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
+            echo >> ~/.fgo/data/buf.md
+          elif [ "$selected_temp" = "Left off last time" ]; then
+            :
+          else
+            _template=$(cat $HOME/.fgo/.github/ISSUE_TEMPLATE/$selected_temp)
+            local _template_start_num=$(expr $(echo "$_template" | grep -n -m2 '^---' | tail -n1 | cut -f1 -d:) + 1)
+            _template=$(echo "$_template" | sed -n $_template_start_num',$p')
+            echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
+            echo "$_template" >> ~/.fgo/data/buf.md
+          fi
+        else
+          _body_interrupt=1
+        fi
+      else
+        echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
+        echo >> ~/.fgo/data/buf.md
+      fi
+      if [ ! $_body_interrupt -eq 1 ]; then
+        echo "$HOME/.fgo/data/buf.md +2" | xargs -o vim
+        _issue_body=$(cat ~/.fgo/data/buf.md)
+      else
+        _issue_body=''
+      fi
     fi
     read-from-minibuffer 'Label: '
     local _issue_label=$REPLY
@@ -119,6 +151,9 @@ function _fgo_github_create_issue_widget() {
       if [ ! $_status = 0 ]; then
         echo "Faild: Could not send a issue."
       else
+        if [ -f "$HOME/.fgo/data/buf.md" ]; then
+          rm -f ~/.fgo/data/buf.md
+        fi
         echo "Success: Send a issue."
       fi
     else
