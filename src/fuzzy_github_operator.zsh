@@ -111,7 +111,7 @@ function _fgo_github_create_issue_widget() {
         _templates="$_templates\n"$(ls $HOME/.fgo/.github/ISSUE_TEMPLATE)
       fi
       if [ ! "$_templates" = "\\033[31m"'without Template'"\\033[0m" ]; then
-        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview,left:abort,right:abort' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
+        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview,left:abort,right:accept' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
         if [ -n "$selected_temp" ]; then
           if [ "$selected_temp" = "without Template" ]; then
             echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
