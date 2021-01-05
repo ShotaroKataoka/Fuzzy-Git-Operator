@@ -37,6 +37,20 @@ function fgo() {
           echo "Not a git repository."
         fi
       fi
+    elif [ "$2" = "list" ]; then
+      if [ "$3" = "global" ]; then
+        cat $HOME/.fgo/user/git_emoji_list.txt
+      else;
+        if [ -n "$_git_dir" ]; then
+          if [ -f "$_git_dir/.fgo_emoji_list.txt" ]; then
+            cat $_git_dir/.fgo_emoji_list.txt
+          else;
+            echo "$_ANSI_COLOR_RED Faild:$_ANSI_COLOR_END$_git_dir /.fgo_emoji_list.txt not found."
+          fi
+        else
+          echo "Not a git repository."
+        fi
+      fi
     else;
       echo "$_ANSI_COLOR_RED Error:$_ANSI_COLOR_END invalid keyword"
     fi
