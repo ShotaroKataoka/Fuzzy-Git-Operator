@@ -12,8 +12,13 @@ function fgo() {
   if [ "$1" = "emoji" ]; then
     if [ "$2" = "init" ]; then
       if [ -n "$_git_dir" ]; then
-        cp $HOME/.fgo/user/git_emoji_list.txt "$_git_dir/.fgo_emoji_list.txt"
-        echo "$_ANSI_COLOR_GREEN Success:$_ANSI_COLOR_END create $_git_dir/.fgo_emoji_list.txt"
+        local cp_status=$(cp -v $HOME/.fgo/user/git_emoji_list.txt "$_git_dir/.fgo_emoji_list.txt")
+        local ret="$?"
+        if [ $ret -eq 0 ]; then
+          if [ -n "$cp_status" ]; then
+            echo "$_ANSI_COLOR_GREEN Success:$_ANSI_COLOR_END create $_git_dir/.fgo_emoji_list.txt"
+          fi
+        fi
       else
         echo "Not a git repository."
       fi
