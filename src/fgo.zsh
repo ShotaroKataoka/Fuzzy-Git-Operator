@@ -9,6 +9,10 @@ function fgo() {
   if [ -n "$_is_git_dir" ]; then
     local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
   fi
+  if [ "$1" = "--help" -o "$2" = "--help" -o "$3" = "--help" ]; then
+    batcat data/help_fgo.md -l js --style=numbers
+    return 0
+  fi
   if [ "$1" = "emoji" ]; then
     if [ "$2" = "init" ]; then
       if [ -n "$_git_dir" ]; then
@@ -31,7 +35,7 @@ function fgo() {
             vim $_git_dir/.fgo_emoji_list.txt
           else;
             echo "$_ANSI_COLOR_RED Faild:$_ANSI_COLOR_END Not found .fgo_emoji_list.txt"
-            echo "$_ANSI_COLOR_YELLOW hint:$_ANSI_COLOR_END exec 'fgo init emoji' first."
+            echo "$_ANSI_COLOR_YELLOW hint:$_ANSI_COLOR_END exec$_ANSI_COLOR_YELLOW fgo emoji init$_ANSI_COLOR_END first."
           fi
         else
           echo "Not a git repository."
@@ -52,10 +56,12 @@ function fgo() {
         fi
       fi
     else;
-      echo "$_ANSI_COLOR_RED Error:$_ANSI_COLOR_END invalid keyword"
+      echo "$_ANSI_COLOR_RED Error:$_ANSI_COLOR_END invalid keyword."
+      echo "$_ANSI_COLOR_YELLOW hint:$_ANSI_COLOR_END to see usage, try$_ANSI_COLOR_YELLOW fgo --help$_ANSI_COLOR_END."
     fi
   else;
-    echo "$_ANSI_COLOR_RED Error:$_ANSI_COLOR_END invalid keyword"
+    echo "$_ANSI_COLOR_RED Error:$_ANSI_COLOR_END invalid keyword."
+    echo "$_ANSI_COLOR_YELLOW hint:$_ANSI_COLOR_END to see usage, try$_ANSI_COLOR_YELLOW fgo --help$_ANSI_COLOR_END."
   fi
 
 }
