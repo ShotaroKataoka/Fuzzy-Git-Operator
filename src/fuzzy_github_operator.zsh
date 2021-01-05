@@ -1,11 +1,15 @@
 # Github help
 function _fgo_help_github_widget() {
+  ## Color Scheme
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
-    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
+    local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
-    local _fgo_color_scheme="dark"
+    local _FGO_COLOR_SCHEME="dark"
   fi
-  batcat ~/.fgo/data/help_github.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Github help" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept" --color="$_fgo_color_scheme"
+  ## GENERAL KEYBIND
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+
+  batcat ~/.fgo/data/help_github.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Github help" --bind="$GENERAL_KEYBIND_BH" --color="$_FGO_COLOR_SCHEME"
   echo 
   echo 
   zle reset-prompt
@@ -15,21 +19,26 @@ function _fgo_help_github_widget() {
 # Github issue
 function _fgo_gitissue_selector() {
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
+  ## Color Scheme
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
-    local _fgo_color_scheme=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
+    local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
-    local _fgo_color_scheme="dark"
+    local _FGO_COLOR_SCHEME="dark"
   fi
-  echo 0 >| ~/.fgo/data/.status/.issue_end.status
-  echo 0 >| ~/.fgo/data/.status/.issue_state.status
-  echo 0 >| ~/.fgo/data/.status/.issue_put_num.status
-  echo 0 >| ~/.fgo/data/.status/.issue_view_issue.status
-  echo 0 >| ~/.fgo/data/.status/.issue_help.status
+  ## General Keybind
+  local GENERAL_KEYBIND_IS=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/issue_selector/g' | tr '\n' ',' | sed 's/,$//')
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+
+  ## Initialize status
+  echo 0 >| ~/.fgo/data/.status/.issue_selector/.end.status
+  echo 0 >| ~/.fgo/data/.status/.issue_selector/.state.status
+  echo 0 >| ~/.fgo/data/.status/.issue_selector/.put_num.status
+  echo 0 >| ~/.fgo/data/.status/.issue_selector/.help.status
   if [ -n "$_is_git_dir" ]; then
     while :
     do
       
-      local _fet_status_state=$(( $(cat ~/.fgo/data/.status/.issue_state.status | wc -l) % 2 ))
+      local _fet_status_state=$(( $(cat ~/.fgo/data/.status/.issue_selector/.state.status | wc -l) % 2 ))
       _infobar="?:Help  Alt-n:Put number  Alt-i:Info  ctrl-j/k:Info Down/Up  Alt-t:Open/Closed  Alt-o:Reopen  Alt-p:Close  Alt-w:Web"
       if [ $_fet_status_state -eq 1 ]; then
         _state_var='open'
@@ -48,26 +57,26 @@ function _fgo_gitissue_selector() {
       issue_list=$(echo "$issue_list" | sed -r 's/\t([^\t]*)/\\033[36m\t\1\\033[0m/2')
       issue_list=$(echo "$issue_list" | sed -r 's/\t([0-9\-]*) ?[0-9\:]* ?[0-9\+]* ?[a-zA-Z]*/\\033[30;1m\t\1\\033[0m/3')
 
-      # issue_list=$(echo "$issue_list" | sed -r 's/([0-9]+)\t/\\033[31m\#\1\\033[0m/g')
       issue_list=$(echo "$issue_list" | column -t -s $'\t')
-      local issue_id=$(echo "$issue_list" | fzf --layout=reverse --prompt "$_prompt" --border --cycle --header="$_infobar" --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'echo {a} | ~/.fgo/src/bin/github_issue_selector_preview'" --bind="alt-h:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+abort,alt-j:down,alt-k:up,alt-l:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_view_issue.status)+accept,left:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+abort,right:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_view_issue.status)+accept,ctrl-c:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+abort,alt-c:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+abort,ctrl-h:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+abort,ctrl-l:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_view_issue.status)+accept,enter:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_view_issue.status)+accept,alt-n:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_put_num.status)+accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-w:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a} -w')+abort,alt-o:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue reopen {a}')+abort,alt-p:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue close {a}')+abort,alt-t:execute-silent(echo 0 >> ~/.fgo/data/.status/.issue_state.status)+abort,alt-i:toggle-preview,?:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_help.status)+abort" --preview-window=:hidden --color="$_fgo_color_scheme")
-      local _loopend=$(cat ~/.fgo/data/.status/.issue_end.status)
-      local _put_num=$(cat ~/.fgo/data/.status/.issue_put_num.status)
-      local _view_issue=$(cat ~/.fgo/data/.status/.issue_view_issue.status)
-      local _help=$(cat ~/.fgo/data/.status/.issue_help.status)
+      local issue_id=$(echo "$issue_list" | fzf --layout=reverse --prompt "$_prompt" --border --cycle --header="$_infobar" --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'echo {a} | ~/.fgo/src/bin/github_issue_selector_preview'" --bind="$GENERAL_KEYBIND_IS,alt-n:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.put_num.status)+accept,alt-w:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a} -w')+abort,alt-o:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue reopen {a}')+abort,alt-p:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue close {a}')+abort,alt-t:execute-silent(echo 0 >> ~/.fgo/data/.status/.issue_selector/.state.status)+abort" --preview-window=:hidden --color="$_FGO_COLOR_SCHEME")
+  local GENERAL_KEYBIND_IS=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/issue_selector/g' | tr '\n' ',' | sed 's/,$//')
+      local _loopend=$(cat ~/.fgo/data/.status/.issue_selector/.end.status)
+      local _put_num=$(cat ~/.fgo/data/.status/.issue_selector/.put_num.status)
+      local _help=$(cat ~/.fgo/data/.status/.issue_selector/.help.status)
       echo
-      if [ $_put_num -eq 1 ]; then
-        issue_id=$(echo "$issue_id" | cut -d ' ' -f 1)
-        LBUFFER="$lbuf$issue_id"
-        RBUFFER="$tail"
-        echo 0 >| ~/.fgo/data/.status/.issue_put_num.status
-      elif [ $_view_issue -eq 1 ]; then
-        issue_id=$(echo "$issue_id" | cut -d ' ' -f 1 | cut -d '#' -f 2)
-        $HOME/.fgo/src/bin/github_issue_selector_preview "$issue_id" | less
-        echo 0 >| ~/.fgo/data/.status/.issue_view_issue.status
-      elif [ $_help -eq 1 ]; then
-        batcat $HOME/.fgo/data/help_gh_issue_selector.md --color=always --style numbers | fzf -m --ansi
-        echo 0 >| ~/.fgo/data/.status/.issue_help.status
+      if [ -n "$issue_id" ]; then
+        if [ $_put_num -eq 1 ]; then
+          issue_id=$(echo "$issue_id" | cut -d ' ' -f 1)
+          LBUFFER="$lbuf$issue_id"
+          RBUFFER="$tail"
+          echo 0 >| ~/.fgo/data/.status/.issue_selector/.put_num.status
+        elif [ $_help -eq 1 ]; then
+          batcat $HOME/.fgo/data/help_gh_issue_selector.md --color=always --style numbers | fzf +m --ansi --bind "$GENERAL_KEYBIND_BH" --color="$_FGO_COLOR_SCHEME" --cycle
+          echo 0 >| ~/.fgo/data/.status/.issue_selector/.help.status
+        else;
+          issue_id=$(echo "$issue_id" | cut -d ' ' -f 1 | cut -d '#' -f 2)
+          $HOME/.fgo/src/bin/github_issue_selector_preview "$issue_id" | less
+        fi
       fi
       if [ $_loopend -eq 1 ]; then
         break
@@ -112,7 +121,15 @@ function _fgo_github_create_issue_widget() {
       fi
       local _body_interrupt=0
       if [ ! "$_templates" = "\\033[31m"'without Template'"\\033[0m" ]; then
-        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind 'alt-j:down,alt-k:up,alt-h:abort,alt-l:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview,left:abort,right:accept' --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
+        ## Color Scheme
+        if [ -f ~/.fgo/user/color_scheme.zsh ]; then
+          local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
+        else
+          local _FGO_COLOR_SCHEME="dark"
+        fi
+        ## GENERAL KEYBIND
+        local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind "$GENERAL_KEYBIND_BH" --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'", --color="$_FGO_COLOR_SCHEME")
         if [ -n "$selected_temp" ]; then
           if [ "$selected_temp" = "without Template" ]; then
             echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
