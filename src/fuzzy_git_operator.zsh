@@ -142,14 +142,19 @@ function _fgo_gitcommit_widget() {
 
 # Git log selector
 function _fgo_gitlog_widget() {
+  ## COLOR SCHEME
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
     local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
     local _FGO_COLOR_SCHEME="dark"
   fi
+  ## GENERAL KEYBIND
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+  ## MAIN
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
+    ## GET Emoji list
     if [ -f "$_git_dir/.git_emoji_list.txt" ]; then
       local _gitemoji=$(cat $_git_dir/.git_emoji_list.txt)
     else
@@ -170,7 +175,8 @@ function _fgo_gitlog_widget() {
     _gitlog=$(echo $_gitlog | sed -e 's/Revert/\\033[31m\\uf126\\033[0m Revert/')
     _gitlog=$(echo $_gitlog | sed -r 's/(\#[0-9]+)/\\033[34;1m\\033[4m\1\\033[0m/g')
     echo
-    local selected_commit=$(echo -e $_gitlog | fzf +m --info='inline' --layout=reverse --border --prompt='Git Log >> ' --height=70% --no-sort --ansi --cycle --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview="echo {} | cut -f 1 -d ' ' | xargs -rI{a} sh -c 'git diff {a}^..{a} --color=always'" --color="$_FGO_COLOR_SCHEME")
+    ## FZF
+    local selected_commit=$(echo -e $_gitlog | fzf +m --info='inline' --layout=reverse --border --prompt='Git Log >> ' --height=70% --no-sort --ansi --cycle --bind="$GENERAL_KEYBIND_BH" --preview="echo {} | cut -f 1 -d ' ' | xargs -rI{a} sh -c 'git diff {a}^..{a} --color=always'" --color="$_FGO_COLOR_SCHEME")
     selected_commit=$(echo $selected_commit | cut -f 1 -d ' ')
     local lbuf=$LBUFFER
     local tail=${LBUFFER:$(( ${#LBUFFER} - ${#trigger} ))}
