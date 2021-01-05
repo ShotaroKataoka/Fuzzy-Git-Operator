@@ -1,5 +1,8 @@
 # fgo command Help
 ## fgo emoji
+- `fgo --help`            | Show help
+- `fgo -h`                | Show help
+                          |
 - `fgo emoji list`        | Show emoji list of current GIT repository.
 - `fgo emoji list global` | Show default emoji list.
                           |

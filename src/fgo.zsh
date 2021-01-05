@@ -9,7 +9,7 @@ function fgo() {
   if [ -n "$_is_git_dir" ]; then
     local _git_dir=$(git rev-parse --show-toplevel 2> /dev/null)
   fi
-  if [ "$1" = "--help" -o "$2" = "--help" -o "$3" = "--help" ]; then
+  if [ "$1" = "--help" -o "$2" = "--help" -o "$3" = "-h" -o "$1" = "-h" -o "$2" = "-h" -o "$3" = "-h" ]; then
     batcat data/help_fgo.md -l js --style=numbers
     return 0
   fi
