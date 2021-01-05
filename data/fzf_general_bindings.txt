@@ -1,0 +1,16 @@
+alt-l:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+accept
+ctrl-l:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+accept
+right:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+accept
+enter:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+accept
+alt-h:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+ctrl-h:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+left:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+ctrl-c:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+ESC:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+alt-c:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.end.status)+abort
+alt-j:down
+alt-k:up
+ctrl-j:preview-down
+ctrl-k:preview-up
+alt-i:toggle-preview
+?:execute-silent(echo 1 >| ~/.fgo/data/.status/.%widget%/.help.status)+accept
