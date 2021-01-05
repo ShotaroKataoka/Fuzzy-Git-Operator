@@ -81,11 +81,15 @@ function _fgo_gitdiff_widget() {
 
 # Git Add Selector
 function _fgo_gitadd_widget() {
+  ## COLOR SCHEME
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
     local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
     local _FGO_COLOR_SCHEME="dark"
   fi
+  ## GENERAL KEYBIND
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+  ## LOOP
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     while :
@@ -95,7 +99,7 @@ function _fgo_gitadd_widget() {
       git_status=$(echo $git_status | sed 's/^M /\\033[32mM \\033[0m/g'| sed 's/^D /\\033[32mD \\033[0m/g' | sed 's/^A /\\033[32mA \\033[0m/g')
       git_status=$(echo $git_status | sed 's/^MM/\\033[32mM\\033[0m\\033[31mM\\033[0m/g')
       IFS=$'\n'
-      local git_selected_list=($(echo $git_status | fzf --ansi --cycle --info='inline' -m --layout=reverse --border --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-j:preview-down,ctrl-k:preview-up,ctrl-l:accept,alt-i:toggle-preview" --preview="echo {} | rev | cut -f 1 -d ' ' | rev | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then batcat {a} --color=always; else lsi {a}; fi'" --prompt="Add/Reset Files >> " --color="$_FGO_COLOR_SCHEME"))
+      local git_selected_list=($(echo $git_status | fzf --ansi --cycle --info='inline' -m --layout=reverse --border --bind="$GENERAL_KEYBIND_BH" --preview="echo {} | rev | cut -f 1 -d ' ' | rev | xargs -rI{a} sh -c 'if [ -f \"{a}\" ]; then batcat {a} --color=always; else lsi {a}; fi'" --prompt="Add/Reset Files >> " --color="$_FGO_COLOR_SCHEME"))
       if [ -n "$git_selected_list" ]; then
         for i in `seq 1 ${#git_selected_list[@]}`
         do
