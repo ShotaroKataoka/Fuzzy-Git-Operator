@@ -250,15 +250,20 @@ function _fgo_gitpull_widget() {
 
 # Git Push Selector
 function _fgo_gitpush_widget() {
+  ## COLOR SCHEME
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
     local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
     local _FGO_COLOR_SCHEME="dark"
   fi
+  ## GENERAL KEYBIND
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+  ## MAIN
   local _is_git_dir=$(git rev-parse --git-dir 2> /dev/null)
   if [ -n "$_is_git_dir" ]; then
     local git_branchs=$(git branch)
-    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --info='inline' --layout=reverse --border --prompt='Git Push >> ' --height=70% --bind='alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,alt-c:abort,left:abort,right:accept,ctrl-j:preview-down,ctrl-k:preview-up,alt-i:toggle-preview' --preview "git show --color=always {}" --color="$_FGO_COLOR_SCHEME")
+    ## FZF
+    selected_branch=$(echo $git_branchs | sed 's/\*/ /' | cut -d " " -f 3 | fzf --cycle +m --info='inline' --layout=reverse --border --prompt='Git Push >> ' --height=70% --bind="$GENERAL_KEYBIND_BH" --preview "git show --color=always {}" --color="$_FGO_COLOR_SCHEME")
     if [ -n "$selected_branch" ]; then
       git push origin "$selected_branch"
       echo 
