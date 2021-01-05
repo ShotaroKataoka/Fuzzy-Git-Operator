@@ -121,9 +121,15 @@ function _fgo_github_create_issue_widget() {
       fi
       local _body_interrupt=0
       if [ ! "$_templates" = "\\033[31m"'without Template'"\\033[0m" ]; then
+        ## Color Scheme
+        if [ -f ~/.fgo/user/color_scheme.zsh ]; then
+          local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
+        else
+          local _FGO_COLOR_SCHEME="dark"
+        fi
         ## GENERAL KEYBIND
         local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
-        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind "$GENERAL_KEYBIND_BH" --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'")
+        local selected_temp=$(echo "$_templates" | fzf +m --cycle --ansi --height=70% --prompt "Select Template >> " --bind "$GENERAL_KEYBIND_BH" --preview "echo {} | xargs -rI{a} sh -c 'if [ \"{a}\" = \"without Template\" ]; then echo \"/dev/null\"; elif [ \"{a}\" = \"Left off last time\" ]; then echo \"$HOME/.fgo/data/buf.md\"; else echo $HOME/.fgo/.github/ISSUE_TEMPLATE/{a}; fi | xargs batcat -l markdown --color=always --style=numbers'", --color="$_FGO_COLOR_SCHEME")
         if [ -n "$selected_temp" ]; then
           if [ "$selected_temp" = "without Template" ]; then
             echo "<!-- Title: $_issue_title -->" >| ~/.fgo/data/buf.md
