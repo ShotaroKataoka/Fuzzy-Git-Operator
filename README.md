@@ -106,3 +106,8 @@ You can select your branches and pull from remote.
 ### ✨Git Help Widget✨
 ⌨ Key map: `Alt-g Alt-h`  
 Show help.
+
+## Contributers! 
+- [ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer!)
+- [yamamoto-yuta](https://github.com/yamamoto-yuta) (Contributer!)
+
