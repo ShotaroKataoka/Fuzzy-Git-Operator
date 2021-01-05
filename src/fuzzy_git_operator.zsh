@@ -31,12 +31,16 @@ function _fgo_gitemoji_widget() {
 
 # Git help
 function _fgo_help_widget() {
+  ## COLOR SCHEME
   if [ -f ~/.fgo/user/color_scheme.zsh ]; then
     local _FGO_COLOR_SCHEME=$(cat ~/.fgo/user/color_scheme.zsh | sed '/^$/d' | sed '/^\#/d' | tr '\n' ',' | sed 's/,$//')
   else
     local _FGO_COLOR_SCHEME="dark"
   fi
-  batcat ~/.fgo/data/help.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Git help" --bind="alt-h:abort,alt-j:down,alt-k:up,alt-l:accept,left:abort,right:accept,alt-c:abort,ctrl-h:abort,ctrl-l:accept" --color="$_FGO_COLOR_SCHEME"
+  ## GENERAL KEYBIND
+  local GENERAL_KEYBIND_BH=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/blackhall/g' | tr '\n' ',' | sed 's/,$//')
+  ## FZF
+  batcat ~/.fgo/data/help.md --number --color=always | fzf --layout=reverse --border --cycle --info='inline' --height=50% --no-sort --ansi +m --header "Git help" --bind="$GENERAL_KEYBIND_BH" --color="$_FGO_COLOR_SCHEME"
   echo 
   echo 
   zle reset-prompt
