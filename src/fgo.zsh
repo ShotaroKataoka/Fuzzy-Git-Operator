@@ -1,9 +1,4 @@
 function fgo() {
-  echo "arg0: $0"
-  echo "arg1: $1"
-  echo "arg2: $2"
-  echo "arg3: $3"
-  echo "arg4: $4"
   local _ANSI_COLOR_RED="\\033[31;1m"
   local _ANSI_COLOR_GREEN="\\033[32m"
   local _ANSI_COLOR_YELLOW="\\033[33m"
