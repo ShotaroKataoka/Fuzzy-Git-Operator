@@ -63,7 +63,7 @@ function _fgo_gitissue_selector() {
         echo 0 >| ~/.fgo/data/.status/.issue_put_num.status
       elif [ $_view_issue -eq 1 ]; then
         issue_id=$(echo "$issue_id" | cut -d ' ' -f 1 | cut -d '#' -f 2)
-        echo "$issue_id" | $HOME/.fgo/src/bin/github_issue_selector_preview | less
+        $HOME/.fgo/src/bin/github_issue_selector_preview "$issue_id" | less
         echo 0 >| ~/.fgo/data/.status/.issue_view_issue.status
       elif [ $_help -eq 1 ]; then
         batcat $HOME/.fgo/data/help_gh_issue_selector.md --color=always --style numbers | fzf -m --ansi
