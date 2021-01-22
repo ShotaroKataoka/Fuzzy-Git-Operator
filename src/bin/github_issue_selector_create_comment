@@ -1,0 +1,66 @@
+#!/bin/zsh
+
+local _ANSI_COLOR_RED="\\033[31;1m"
+local _ANSI_COLOR_GREEN="\\033[32m"
+local _ANSI_COLOR_YELLOW="\\033[33m"
+local _ANSI_COLOR_LIGHT_YELLOW="\\033[33;1m"
+local _ANSI_COLOR_BLUE="\\033[36;1m"
+local _ANSI_COLOR_GRAY="\\033[38;05;245m"
+local _ANSI_COLOR_END="\\033[0m"
+
+local _ANSI_COLOR_LABELS="\\033[36;1m"
+local _ANSI_COLOR_PROJECTS="\\033[38;05;202m"
+local _ANSI_COLOR_MILESTONE="\\033[38;05;140m"
+local _ANSI_COLOR_ASSIGNEES="\\033[33;1m"
+
+if [ -n "$1" ]; then
+  local pipe_mode='false'
+  local issue_num="$1"
+else
+  read;
+  if [ -n "$REPLY" ]; then
+    local issue_num="$REPLY"
+    local pipe_mode='true'
+  else
+    echo "error: empty input." 1>&2
+    return 1
+  fi
+fi
+
+echo "Creating comment on #""$issue_num:"
+
+
+if [ ! -d "$HOME/.fgo/data/issue_comment" ]; then
+  mkdir "$HOME/.fgo/data/issue_comment"
+fi
+
+if [ ! -f "$HOME/.fgo/data/issue_comment/$issue_num.md" ]; then
+  echo "<!-- Issue History -->" >| "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  echo "<!--" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  $HOME/.fgo/src/bin/github_issue_selector_preview "$issue_num" "noansi" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  echo "-->" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  echo "<!-- Please delete above histories before publishinig -->\n" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+fi
+
+echo "$HOME/.fgo/data/issue_comment/$issue_num.md +" | xargs -o vim
+
+echo "Send a comment. ok? (y/n): "
+read -q;
+echo
+if [ "$REPLY" = "y" ]; then
+  _body="$(cat $HOME/.fgo/data/issue_comment/$issue_num.md)"
+  gh issue comment $issue_num --body="$_body"
+  local _status=$?
+  if [ ! $_status = 0 ]; then
+    echo "Faild: Could not send a comment."
+  else
+    if [ -f "$HOME/.fgo/data/issue_comment/$issue_num.md" ]; then
+      rm -f ~/.fgo/data/issue_comment/$issue_num.md
+    fi
+    echo "Success: Send a comment."
+  fi
+else
+  echo "Did not send a comment."
+fi
+sleep 0.1s
+

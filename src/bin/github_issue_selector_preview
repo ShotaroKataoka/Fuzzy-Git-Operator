@@ -12,10 +12,26 @@ local _ANSI_COLOR_LABELS="\\033[36;1m"
 local _ANSI_COLOR_PROJECTS="\\033[38;05;202m"
 local _ANSI_COLOR_MILESTONE="\\033[38;05;140m"
 local _ANSI_COLOR_ASSIGNEES="\\033[33;1m"
+local _bat_color="always"
 
 if [ -n "$1" ]; then
   local pipe_mode='false'
   local issue_num="$1"
+  if [ "$2" = "noansi" ]; then
+    local _ANSI_COLOR_RED=""
+    local _ANSI_COLOR_GREEN=""
+    local _ANSI_COLOR_YELLOW=""
+    local _ANSI_COLOR_LIGHT_YELLOW=""
+    local _ANSI_COLOR_BLUE=""
+    local _ANSI_COLOR_GRAY=""
+    local _ANSI_COLOR_END=""
+    local _ANSI_COLOR_LABELS=""
+    local _ANSI_COLOR_PROJECTS=""
+    local _ANSI_COLOR_MILESTONE=""
+    local _ANSI_COLOR_ASSIGNEES=""
+    local _bat_color="never"
+    local _line_size=50
+  fi
 else
   read;
   if [ -n "$REPLY" ]; then
@@ -43,6 +59,8 @@ _body="$(echo "$_input" | sed -n '10,$p')"
 # Title
 if [ "$pipe_mode" = "true" ]; then
   _LINE_SIZE=$(echo $(tput cols) \* 0.55 | bc | cut -f 1 -d '.')
+elif [ -n "$_line_size" ]; then
+  _LINE_SIZE=$_line_size
 else;
   _LINE_SIZE=$(tput cols)
 fi
@@ -85,7 +103,7 @@ done
 echo "$_char Issue body $_char"
 echo "$_ANSI_COLOR_END"
 
-echo "$_body" | batcat -l md --color=always --style='numbers' | sed -e 's///g'
+echo "$_body" | batcat -l md --color="$_bat_color" --style='numbers' | sed -e 's///g'
 
 echo "$_ANSI_COLOR_GRAY"
 local _char_num=$(echo $(expr "$_LINE_SIZE" - 12) \* 0.33 \* 2 | bc | cut -d '.' -f 1)
@@ -132,7 +150,7 @@ if [ -n "$_comments" ]; then
       echo
       _body="$(echo "$_comments" | sed -n $(expr $_comment_start + 4)',$p' | sed '$d')"
     fi
-    echo $_body | batcat -l md --color=always --style='numbers'
+    echo $_body | batcat -l md --color="$_bat_color" --style='numbers'
     echo "$_ANSI_COLOR_GRAY"
     echo "────────────$_char_line$_char_line"
     echo "$_ANSI_COLOR_END"
