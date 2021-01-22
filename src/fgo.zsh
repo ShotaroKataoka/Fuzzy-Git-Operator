@@ -49,7 +49,7 @@ function fgo() {
           if [ -f "$_git_dir/.fgo_emoji_list.txt" ]; then
             cat $_git_dir/.fgo_emoji_list.txt
           else;
-            echo "$_ANSI_COLOR_RED Faild:$_ANSI_COLOR_END$_git_dir /.fgo_emoji_list.txt not found."
+            echo "$_ANSI_COLOR_RED Faild:$_ANSI_COLOR_END$_git_dir/.fgo_emoji_list.txt not found."
           fi
         else
           echo "Not a git repository."
