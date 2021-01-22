@@ -39,16 +39,30 @@ if [ ! -f "$HOME/.fgo/data/issue_comment/$issue_num.md" ]; then
   echo "<!--" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
   $HOME/.fgo/src/bin/github_issue_selector_preview "$issue_num" "noansi" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
   echo "-->" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
-  echo "<!-- Please delete above histories before publishinig -->\n" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  echo "<!-- Please delete above histories before publishinig or -->" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
+  echo "<!-- Automatically deleted above lines. Do not touch this line. -->\n" >> "$HOME/.fgo/data/issue_comment/$issue_num.md"
 fi
 
 echo "$HOME/.fgo/data/issue_comment/$issue_num.md +" | xargs -o vim
 
-echo "Send a comment. ok? (y/n): "
+_body="$(cat $HOME/.fgo/data/issue_comment/$issue_num.md)"
+_remove_num=$(echo "$_body" | grep "^<!-- Automatically deleted above lines. Do not touch this line. -->" -n)
+if [ ! -n "$_remove_num" ]; then
+  _remove_num=1
+else
+  _remove_num=$(echo $_remove_num | tac | sed 's/:.*//1' | head -n 1)
+  _remove_num=$(expr $_remove_num + 1)
+fi
+_body=$(echo "$_body" | sed -n $_remove_num',$p')
+echo "──────────"
+echo "$_body"
+echo "──────────"
+
+echo "Send above comment. ok? (y/n): "
 read -q;
 echo
+
 if [ "$REPLY" = "y" ]; then
-  _body="$(cat $HOME/.fgo/data/issue_comment/$issue_num.md)"
   gh issue comment $issue_num --body="$_body"
   local _status=$?
   if [ ! $_status = 0 ]; then
