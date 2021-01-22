@@ -13,6 +13,7 @@
 # Action
 - Show in browser               | Alt-w
 - Toggle show Open/Closed issue | Alt-t
+- Reply comment                 | Alt-r
 - Reopen issue                  | Alt-o
 - Close issue                   | Alt-p
 - Put issue number              | Alt-n
