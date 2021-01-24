@@ -2,4 +2,6 @@ user/git_emoji_list.txt
 user/color_scheme.zsh
 user/fgo_keybindings.zsh
 data/.status/*.status
+data/.status/*/*.status
 data/buf.md
+data/issue_comment/

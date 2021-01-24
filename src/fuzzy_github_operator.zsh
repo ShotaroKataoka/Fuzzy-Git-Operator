@@ -33,13 +33,14 @@ function _fgo_gitissue_selector() {
   echo 0 >| ~/.fgo/data/.status/.issue_selector/.end.status
   echo 0 >| ~/.fgo/data/.status/.issue_selector/.state.status
   echo 0 >| ~/.fgo/data/.status/.issue_selector/.put_num.status
+  echo 0 >| ~/.fgo/data/.status/.issue_selector/.create_comment.status
   echo 0 >| ~/.fgo/data/.status/.issue_selector/.help.status
   if [ -n "$_is_git_dir" ]; then
     while :
     do
       
       local _fet_status_state=$(( $(cat ~/.fgo/data/.status/.issue_selector/.state.status | wc -l) % 2 ))
-      _infobar="?:Help  Alt-n:Put number  Alt-i:Info  ctrl-j/k:Info Down/Up  Alt-t:Open/Closed  Alt-o:Reopen  Alt-p:Close  Alt-w:Web"
+      _infobar="?:Help  Alt-n:Number  Alt-i:Info  ctrl-j/k:Info Down/Up  Alt-t:Open/Closed  Alt-r:Reply  Alt-o:Reopen  Alt-p:Close  Alt-w:Web"
       if [ $_fet_status_state -eq 1 ]; then
         _state_var='open'
         _prompt='Open Issues >> '
@@ -58,10 +59,11 @@ function _fgo_gitissue_selector() {
       issue_list=$(echo "$issue_list" | sed -r 's/\t([0-9\-]*) ?[0-9\:]* ?[0-9\+]* ?[a-zA-Z]*/\\033[30;1m\t\1\\033[0m/3')
 
       issue_list=$(echo "$issue_list" | column -t -s $'\t')
-      local issue_id=$(echo "$issue_list" | fzf --layout=reverse --prompt "$_prompt" --border --cycle --header="$_infobar" --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'echo {a} | ~/.fgo/src/bin/github_issue_selector_preview'" --bind="$GENERAL_KEYBIND_IS,alt-n:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.put_num.status)+accept,alt-w:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a} -w')+abort,alt-o:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue reopen {a}')+abort,alt-p:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue close {a}')+abort,alt-t:execute-silent(echo 0 >> ~/.fgo/data/.status/.issue_selector/.state.status)+abort" --preview-window=:hidden --color="$_FGO_COLOR_SCHEME")
+      local issue_id=$(echo "$issue_list" | fzf --layout=reverse --prompt "$_prompt" --border --cycle --header="$_infobar" --info='inline' --height=50% --ansi +m --preview="echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'echo {a} | ~/.fgo/src/bin/github_issue_selector_preview'" --bind="$GENERAL_KEYBIND_IS,alt-n:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.end.status)+execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.put_num.status)+accept,alt-r:execute-silent(echo 1 >| ~/.fgo/data/.status/.issue_selector/.create_comment.status)+accept,alt-w:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue view {a} -w')+abort,alt-o:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue reopen {a}')+abort,alt-p:execute-silent(echo {} | cut -f 1 -d ' ' | sed -r \"s/#([0-9]*)/\1/\" | xargs -rI{a} sh -c 'gh issue close {a}')+abort,alt-t:execute-silent(echo 0 >> ~/.fgo/data/.status/.issue_selector/.state.status)+abort" --preview-window=:hidden --color="$_FGO_COLOR_SCHEME")
   local GENERAL_KEYBIND_IS=$(cat ~/.fgo/data/fzf_general_bindings.txt | sed 's/%widget%/issue_selector/g' | tr '\n' ',' | sed 's/,$//')
       local _loopend=$(cat ~/.fgo/data/.status/.issue_selector/.end.status)
       local _put_num=$(cat ~/.fgo/data/.status/.issue_selector/.put_num.status)
+      local _create_comment=$(cat ~/.fgo/data/.status/.issue_selector/.create_comment.status)
       local _help=$(cat ~/.fgo/data/.status/.issue_selector/.help.status)
       echo
       if [ -n "$issue_id" ]; then
@@ -70,6 +72,10 @@ function _fgo_gitissue_selector() {
           LBUFFER="$lbuf$issue_id"
           RBUFFER="$tail"
           echo 0 >| ~/.fgo/data/.status/.issue_selector/.put_num.status
+        elif [ $_create_comment -eq 1 ]; then
+          issue_id=$(echo "$issue_id" | cut -d ' ' -f 1 | cut -d '#' -f 2)
+          $HOME/.fgo/src/bin/github_issue_selector_create_comment "$issue_id"
+          echo 0 >| ~/.fgo/data/.status/.issue_selector/.create_comment.status
         elif [ $_help -eq 1 ]; then
           batcat $HOME/.fgo/data/help_gh_issue_selector.md --color=always --style numbers | fzf +m --ansi --bind "$GENERAL_KEYBIND_BH" --color="$_FGO_COLOR_SCHEME" --cycle
           echo 0 >| ~/.fgo/data/.status/.issue_selector/.help.status
