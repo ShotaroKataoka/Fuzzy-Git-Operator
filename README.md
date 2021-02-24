@@ -107,7 +107,7 @@ You can select your branches and pull from remote.
 ⌨ Key map: `Alt-g Alt-h`  
 Show help.
 
-## Contributers! 
+## Contributors! 
 - [ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer!)
 - [yamamoto-yuta](https://github.com/yamamoto-yuta) (Contributor!)
 
