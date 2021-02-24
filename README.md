@@ -109,5 +109,5 @@ Show help.
 
 ## Contributers! 
 - [ShotaroKataoka](https://github.com/ShotaroKataoka) (Maintainer!)
-- [yamamoto-yuta](https://github.com/yamamoto-yuta) (Contributer!)
+- [yamamoto-yuta](https://github.com/yamamoto-yuta) (Contributor!)
 
