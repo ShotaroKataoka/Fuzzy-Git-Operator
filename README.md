@@ -1,6 +1,6 @@
 # 🎉🎉Fuzzy Git Operator🎉🎉
 An interactive Git Operator on zsh Terminal🚀
-- Easy Git Operation
+- Easy Git/Github Operation
 - Enjoy colorful developing with [emoji-prefix](https://goodpatch.com/blog/beautiful-commits-with-emojis/) commit messages!
 
 ## 🥰Install
